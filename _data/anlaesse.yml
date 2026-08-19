@@ -1,0 +1,13 @@
+# Anlässe, zu denen Wonderbrass spielt – Bezeichnung und Font-Awesome-Icon.
+- name: "Stadt- & Volksfeste"
+  icon: "fa-people-group"
+- name: "Festzelt"
+  icon: "fa-tent"
+- name: "Kirchenkonzert"
+  icon: "fa-church"
+- name: "Hochzeit"
+  icon: "fa-heart"
+- name: "Geburtstag"
+  icon: "fa-cake-candles"
+- name: "Jubiläum"
+  icon: "fa-trophy"

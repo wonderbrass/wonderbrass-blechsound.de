@@ -6,6 +6,11 @@ $brass-dark:  #252525; // Sekundärfarbe – Fließtext, dunkle Flächen
 $brass-grey:  #C4C4C4; // Tertiärfarbe – Trennlinien, dezente Flächen
 $brass-white: #FFFFFF;
 
+// Tertiärfarbe als helle, deckende Fläche (Hero, Navigation, abwechselnde
+// Sektionen) – bewusst deckend statt transparent, da die Navigation als
+// "sticky" über scrollendem Inhalt liegt.
+$brass-tertiary-bg: mix($brass-grey, $brass-white, 25%);
+
 // ------------------------------------------------------------------
 // Bootstrap-Theme-Farben mappen, BEVOR bootstrap importiert wird
 // ------------------------------------------------------------------
@@ -48,6 +53,10 @@ $border-radius-lg:   0.2rem;
 $navbar-dark-color:            rgba($brass-white, .85);
 $navbar-dark-hover-color:      $brass-white;
 $navbar-dark-active-color:     $brass-gold;
+
+$navbar-light-color:           rgba($brass-dark, .75);
+$navbar-light-hover-color:     $brass-dark;
+$navbar-light-active-color:    $brass-gold;
 
 $headings-font-family: $font-family-headline;
 $headings-font-weight: 600;

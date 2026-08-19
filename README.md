@@ -23,8 +23,14 @@ Definiert in `_sass/_variables.scss` – dort auch die Bootstrap-Farb-Map
 ├── _config.yml            # Grundeinstellungen, Bandkontakt, Social Links
 ├── _data/
 │   ├── navigation.yml      # Hauptnavigation (frei erweiterbar)
-│   └── termine.yml         # Konzerttermine (wird beim Build automatisch
-│                            # von der Konzertmeister-API überschrieben)
+│   ├── mitglieder.yml      # Bandmitglieder (Name, Instrument, optional Foto)
+│   ├── anlaesse.yml        # Anlässe auf der Seite "Über uns" (Name + Icon)
+│   ├── sponsoren.yml       # Sponsoren (Name, Logo, Website, optional "haupt")
+│   ├── termine.yml         # kommende Konzerttermine (wird beim Build
+│   │                        # automatisch von der Konzertmeister-API
+│   │                        # überschrieben)
+│   └── termine_vergangen.yml   # vergangene Termine des laufenden
+│                                # Kalenderjahres (dito automatisch)
 ├── _includes/               # head, header/navbar, footer
 ├── _layouts/                 # default, page, home
 ├── _plugins/
@@ -39,7 +45,7 @@ Definiert in `_sass/_variables.scss` – dort auch die Bootstrap-Farb-Map
 │   └── img/                # eigene Bilder (Favicon etc.) hier ablegen
 ├── script/
 │   └── fetch_termine.rb    # holt Termine von der Konzertmeister-API
-├── index.html, ueber-uns.md, termine.html
+├── index.html, ueber-uns.md, termine.html, sponsoren.html
 ├── impressum.md
 ├── Gemfile
 └── .github/workflows/pages.yml   # Build & Deploy nach GitHub Pages
@@ -60,10 +66,16 @@ deployment* → Source auf **„GitHub Actions"** stellen.
 
 Die Termine werden nicht mehr manuell gepflegt, sondern bei jedem Build von
 [Konzertmeister](https://konzertmeister.app) über `script/fetch_termine.rb`
-abgerufen und nach `_data/termine.yml` geschrieben. Übernommen werden nur
-Termine vom Typ *Performance*, mit Status *aktiv* und die von der Band
-explizit für die öffentliche Website freigegeben wurden (`publicsite: true`
-in Konzertmeister).
+abgerufen. Übernommen werden nur Termine vom Typ *Performance*, mit Status
+*aktiv* und die von der Band explizit für die öffentliche Website
+freigegeben wurden (`publicsite: true` in Konzertmeister). Das Script
+schreibt zwei Dateien:
+
+- `_data/termine.yml` – alle kommenden Termine.
+- `_data/termine_vergangen.yml` – bereits stattgefundene Termine des
+  laufenden Kalenderjahres (ab 1. Januar), neueste zuerst. Werden auf
+  `termine.html` unterhalb der kommenden Termine in einem eigenen,
+  optisch zurückhaltenderen Block angezeigt.
 
 **API-Key sicher hinterlegen:** Ein Konzertmeister-API-Key darf **niemals**
 im Repository landen (GitHub Pages ist immer öffentlich erreichbar, egal ob
@@ -87,8 +99,9 @@ Aufruf als Umgebungsvariable setzen, nicht dauerhaft exportieren:
 KONZERTMEISTER_API_KEY="dein-key" bundle exec ruby script/fetch_termine.rb
 ```
 
-Ohne gesetzten Key bleibt die zuletzt im Repo vorhandene `_data/termine.yml`
-unverändert – lokales Entwickeln funktioniert also auch ohne Key.
+Ohne gesetzten Key bleiben die zuletzt im Repo vorhandenen
+`_data/termine*.yml` unverändert – lokales Entwickeln funktioniert also auch
+ohne Key.
 
 ## Lokal entwickeln
 

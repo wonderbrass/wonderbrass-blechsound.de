@@ -1,15 +1,27 @@
 // ------------------------------------------------------------------
-// Navigation
+// Fließtext
 // ------------------------------------------------------------------
-.navbar-brand {
-  font-family: $font-family-headline;
-  font-weight: 600;
-  letter-spacing: .05em;
-  text-transform: uppercase;
+p {
+  font-size: 1.1rem;
 }
 
+// ------------------------------------------------------------------
+// Navigation
+// ------------------------------------------------------------------
 .navbar-brasscombo {
   background-color: $brass-dark;
+
+  .navbar-nav {
+    // Nur 4 Punkte – auf dem Handy nicht hinter einem Hamburger-Menü
+    // verstecken, sondern direkt anzeigen.
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-item {
+    text-align: center;
+  }
 
   .nav-link {
     text-transform: uppercase;
@@ -18,32 +30,44 @@
     padding-left: 1rem !important;
     padding-right: 1rem !important;
   }
+
+  // Unter 576px passen nicht alle 4 Punkte in eine Zeile. Statt natürlich
+  // (und damit ungleichmäßig, z.B. 3+1) umzubrechen, immer ein festes
+  // 2×2-Raster erzwingen.
+  @media (max-width: 576px) {
+    .nav-item {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+
+    .nav-link {
+      font-size: .8rem;
+      letter-spacing: .04em;
+      padding-top: .5rem;
+      padding-bottom: .5rem;
+    }
+  }
 }
 
 // ------------------------------------------------------------------
 // Hero-Bereich (Startseite)
 // ------------------------------------------------------------------
 .hero {
-  color: $brass-white;
-  background-color: $brass-dark;
-  padding: 7rem 1rem;
+  background-color: $brass-tertiary-bg;
+  padding: 1rem 1rem 1rem;
   text-align: center;
 
-  // Schriftzug ist für hellen Untergrund gestaltet – braucht auf dem
-  // dunklen Hero-Hintergrund einen hellen Hintergrund-Chip. Inline statt <img>
-  // eingebunden, damit die SVG-Texte unsere selbstgehostete Trajan-Pro-
-  // Schrift nutzen können (als <img> hat das SVG keinen Zugriff auf
-  // die Seiten-Fonts und fällt auf eine Ersatzschrift mit falschen
-  // Zeichenabständen zurück).
+  // Schriftzug ist für hellen Untergrund gestaltet – auf der hellen
+  // Tertiärfarbe des Hero-Bereichs kommt er direkt zur Geltung, ganz ohne
+  // Hintergrund-Chip. Inline statt <img> eingebunden, damit die SVG-Texte
+  // unsere selbstgehostete Trajan-Pro-Schrift nutzen können (als <img> hat
+  // das SVG keinen Zugriff auf die Seiten-Fonts und fällt auf eine
+  // Ersatzschrift mit falschen Zeichenabständen zurück).
   .hero-logo {
     display: block;
     width: 90%;
     max-width: 420px;
-    margin: 0 auto 1.5rem;
-    padding: 1.5rem 2rem;
-    background-color: $brass-white;
-    border-radius: $border-radius-lg;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+    margin: 0 auto 1rem;
 
     svg {
       display: block;
@@ -53,7 +77,7 @@
   }
 
   .lead {
-    color: rgba($brass-white, .85);
+    color: rgba($brass-dark, .75);
   }
 }
 
@@ -75,22 +99,184 @@
 }
 
 .bg-tertiary {
+  background-color: $brass-tertiary-bg;
+}
+
+// Abwechselnde dunkle Sektion (Gegenstück zu .bg-tertiary), z.B. um bei
+// jedem neuen Abschnitt die Hintergrundfarbe zu wechseln.
+.section-dark {
+  background-color: $brass-dark;
+  color: rgba($brass-white, .85);
+
+  h1, h2, h3, h4, h5, h6 {
+    color: $brass-white;
+  }
+}
+
+// ------------------------------------------------------------------
+// Die Band / Mitglieder
+// ------------------------------------------------------------------
+.member-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
   background-color: rgba($brass-grey, .25);
+  border: 2px solid $brass-gold;
+  overflow: hidden;
+  font-size: 2.5rem;
+  color: $brass-grey;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.member-name {
+  font-family: $font-family-headline;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+  font-size: .95rem;
+}
+
+.member-instrument {
+  color: rgba($brass-dark, .65);
+  font-size: .9rem;
+}
+
+// ------------------------------------------------------------------
+// Programm / Anlässe
+// ------------------------------------------------------------------
+.program-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-color: $brass-dark;
+  color: $brass-gold;
+  font-size: 1.4rem;
 }
 
 // ------------------------------------------------------------------
 // Termine / Gig-Karten
 // ------------------------------------------------------------------
 .gig-card {
+  background-color: $brass-white;
   border: 1px solid $brass-grey;
   border-left: 4px solid $brass-gold;
   border-radius: $border-radius;
+  box-shadow: 0 .25rem .75rem rgba($brass-dark, .06);
 
   .gig-date {
     font-family: $font-family-headline;
     color: $brass-gold;
     font-weight: 600;
     text-transform: uppercase;
+  }
+
+  // Hervorgehobene Karte für den nächsten anstehenden Termin. Bewusst hell
+  // gehalten (nicht die dunkle Kartenfarbe), da diese Karte in der Regel auf
+  // dem dunklen "Nächster Auftritt"-Abschnitt liegt und sonst dunkel auf
+  // dunkel stünde.
+  &.gig-card-featured {
+    border-left-width: 6px;
+    color: $body-color;
+    box-shadow: 0 .5rem 1.5rem rgba($brass-dark, .25);
+
+    .gig-date {
+      font-size: 1.25rem;
+    }
+
+    .gig-title {
+      font-family: $font-family-headline;
+      font-size: 1.75rem;
+      text-transform: uppercase;
+    }
+
+    .gig-badge {
+      display: inline-block;
+      font-family: $font-family-headline;
+      color: $brass-dark;
+      background-color: $brass-gold;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-size: .8rem;
+      padding: .3rem .75rem;
+      border-radius: $border-radius;
+    }
+  }
+
+  // Vergangene Termine: in der Tertiärfarbe statt Gold, damit die
+  // zeitliche Einordnung auch visuell sofort erkennbar ist.
+  &.gig-card-past {
+    background-color: mix($brass-grey, $brass-white, 15%);
+    border-left-color: $brass-grey;
+    box-shadow: none;
+
+    .gig-date {
+      color: darken($brass-grey, 28%);
+    }
+  }
+}
+
+// ------------------------------------------------------------------
+// Sponsoren
+// ------------------------------------------------------------------
+.sponsor-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 8rem;
+  padding: 1rem 1.5rem;
+  background-color: $brass-white;
+  border: 1px solid $brass-grey;
+  border-radius: $border-radius;
+  transition: border-color .2s ease, box-shadow .2s ease;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: grayscale(40%);
+    transition: filter .2s ease;
+  }
+
+  &:hover {
+    border-color: $brass-gold;
+    box-shadow: 0 .5rem 1.25rem rgba($brass-dark, .1);
+
+    img {
+      filter: grayscale(0%);
+    }
+  }
+
+  // Hauptsponsoren: größer und immer in Farbe, kein Graustufen-Standardlook.
+  &.sponsor-card-lg {
+    height: 11rem;
+    padding: 1.5rem 2rem;
+    border: 1px solid $brass-gold;
+    border-width: 2px;
+
+    img {
+      filter: none;
+    }
+  }
+
+  // Sponsoren ohne Logo: Firmenname als Text statt Bild.
+  &.sponsor-card-text {
+    font-family: $font-family-headline;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    font-size: .95rem;
+    color: $brass-dark;
   }
 }
 
@@ -128,6 +314,7 @@
     border: 1px solid rgba($brass-white, .3);
     border-radius: 50%;
     margin-right: .5rem;
+    text-decoration: none;
 
     &:hover {
       border-color: $brass-gold;

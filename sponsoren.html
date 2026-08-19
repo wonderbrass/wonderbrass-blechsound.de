@@ -1,0 +1,43 @@
+---
+layout: home
+title: Sponsoren
+description: "Unsere Sponsoren, die Wonderbrass möglich machen."
+---
+
+{% assign hauptsponsoren = site.data.sponsoren | where: "haupt", true %}
+{% assign weitere_sponsoren = site.data.sponsoren | where_exp: "s", "s.haupt != true" %}
+
+<section class="section bg-tertiary">
+  <div class="container">
+    {% if hauptsponsoren.size > 0 %}
+      <h2 class="section-title d-block text-center mx-auto mb-4" style="width: fit-content;">Hauptsponsoren</h2>
+      <div class="row g-4 justify-content-center mb-5">
+        {% for sponsor in hauptsponsoren %}
+          <div class="col-6 col-md-4">
+            {% include sponsor-card.html sponsor=sponsor extra_class="sponsor-card-lg" %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if weitere_sponsoren.size > 0 %}
+      {% if hauptsponsoren.size > 0 %}
+        <h2 class="section-title d-block text-center mx-auto mb-4" style="width: fit-content;">Weitere Sponsoren</h2>
+      {% endif %}
+      <div class="row g-4">
+        {% for sponsor in weitere_sponsoren %}
+          <div class="col-6 col-md-4 col-lg-3">
+            {% include sponsor-card.html sponsor=sponsor %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+  <div class="container text-center mt-4 pt-4">
+    <h2 class="section-title d-block mx-auto mb-4" style="width: fit-content;">Danke</h2>
+    <p class="col-lg-8 mx-auto mb-0">
+      Ohne die Unterstützung dieser Firmen und Partner wäre unsere Musik so nicht
+      möglich. Herzlichen Dank für die langjährige Treue und Förderung!
+    </p>
+  </div>
+</section>

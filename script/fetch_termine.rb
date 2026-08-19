@@ -2,15 +2,16 @@
 # frozen_string_literal: true
 
 # Holt die Konzerttermine über die Konzertmeister-API und schreibt sie nach
-# _data/termine.yml. Wird vor "jekyll build" ausgeführt (siehe
-# .github/workflows/pages.yml bzw. README).
+# _data/termine.yml (kommende Termine) und _data/termine_vergangen.yml
+# (vergangene Termine des laufenden Kalenderjahres). Wird vor "jekyll build"
+# ausgeführt (siehe .github/workflows/pages.yml bzw. README).
 #
 # Der API-Key wird ausschließlich über die Umgebungsvariable
 # KONZERTMEISTER_API_KEY gelesen und landet nie im Repository. In GitHub
 # Actions kommt er aus einem verschlüsselten Repository-Secret; lokal kann
 # er beim Aufruf gesetzt werden. Ist keine Umgebungsvariable gesetzt, bricht
-# das Script NICHT ab, sondern behält die zuletzt im Repo vorhandene
-# _data/termine.yml bei (praktisch für lokale Entwicklung ohne Key).
+# das Script NICHT ab, sondern behält die zuletzt im Repo vorhandenen
+# _data/termine*.yml bei (praktisch für lokale Entwicklung ohne Key).
 
 require "net/http"
 require "uri"
@@ -22,7 +23,15 @@ require "tzinfo"
 API_URL = "https://rest.konzertmeister.app/api/v4/org/m2m/appointments"
 TYPE_PERFORMANCE = 2
 OUTPUT_PATH = File.join(__dir__, "..", "_data", "termine.yml")
+PAST_OUTPUT_PATH = File.join(__dir__, "..", "_data", "termine_vergangen.yml")
 DEFAULT_TIMEZONE = "Europe/Berlin"
+
+BASE_FILTERS = {
+  typeIds: [TYPE_PERFORMANCE],
+  activationStatusList: ["ACTIVE"],
+  publishedStatus: "PUBLISHED",
+  sortMode: "STARTDATE",
+}.freeze
 
 # Liquids "date"-Filter nutzt für %A/%B/%H die System-Locale bzw. UTC, was
 # auf den meisten Servern/CI-Runnern zu falschen (englischen bzw. nicht an
@@ -36,19 +45,12 @@ MONATE_LANG = %w[
   Januar Februar März April Mai Juni Juli August September Oktober November Dezember
 ].freeze
 
-def fetch_page(api_key, page)
+def fetch_page(api_key, filters, page)
   uri = URI(API_URL)
   request = Net::HTTP::Post.new(uri)
   request["X-KM-ORG-API-KEY"] = api_key
   request["Content-Type"] = "application/json"
-  request.body = {
-    typeIds: [TYPE_PERFORMANCE],
-    activationStatusList: ["ACTIVE"],
-    publishedStatus: "PUBLISHED",
-    dateMode: "UPCOMING",
-    sortMode: "STARTDATE",
-    page: page,
-  }.to_json
+  request.body = filters.merge(page: page).to_json
 
   response = Net::HTTP.start(uri.host, uri.port, use_ssl: true) { |http| http.request(request) }
 
@@ -60,12 +62,12 @@ def fetch_page(api_key, page)
   JSON.parse(response.body)
 end
 
-def fetch_all_appointments(api_key)
+def fetch_all_appointments(api_key, filters)
   appointments = []
   page = 0
 
   loop do
-    batch = fetch_page(api_key, page)
+    batch = fetch_page(api_key, filters, page)
     break if batch.empty?
 
     appointments.concat(batch)
@@ -105,21 +107,37 @@ def to_termin(appointment)
   }
 end
 
+def public_termine(appointments)
+  # Nur Termine, die die Band explizit für die öffentliche Website freigegeben hat.
+  appointments.select { |a| a["publicsite"] }.map { |a| to_termin(a) }
+end
+
 api_key = ENV["KONZERTMEISTER_API_KEY"]
 
 if api_key.nil? || api_key.empty?
-  warn "KONZERTMEISTER_API_KEY ist nicht gesetzt – _data/termine.yml bleibt unverändert."
+  warn "KONZERTMEISTER_API_KEY ist nicht gesetzt – _data/termine*.yml bleiben unverändert."
   exit 0
 end
 
-appointments = fetch_all_appointments(api_key)
+now_utc = Time.now.utc
+current_year = local_time(now_utc.iso8601, DEFAULT_TIMEZONE).year
 
-# Nur Termine, die die Band explizit für die öffentliche Website freigegeben hat.
-public_appointments = appointments.select { |a| a["publicsite"] }
+upcoming_filters = BASE_FILTERS.merge(dateMode: "UPCOMING")
+past_filters = BASE_FILTERS.merge(
+  dateMode: "FROM_DATE",
+  filterStart: format("%04d-01-01T00:00:00+00:00", current_year),
+  filterEnd: now_utc.strftime("%Y-%m-%dT%H:%M:%S+00:00"),
+)
 
-termine = public_appointments
-  .map { |a| to_termin(a) }
+upcoming_termine = public_termine(fetch_all_appointments(api_key, upcoming_filters))
   .sort_by { |t| t["start"] }
 
-File.write(OUTPUT_PATH, termine.to_yaml)
-puts "#{termine.length} Termin(e) von der Konzertmeister-API nach _data/termine.yml geschrieben."
+# Nur das laufende Kalenderjahr, neueste zuerst.
+vergangene_termine = public_termine(fetch_all_appointments(api_key, past_filters))
+  .sort_by { |t| t["start"] }
+  .reverse
+
+File.write(OUTPUT_PATH, upcoming_termine.to_yaml)
+File.write(PAST_OUTPUT_PATH, vergangene_termine.to_yaml)
+puts "#{upcoming_termine.length} kommende(r) und #{vergangene_termine.length} " \
+     "vergangene(r) Termin(e) von der Konzertmeister-API geschrieben."

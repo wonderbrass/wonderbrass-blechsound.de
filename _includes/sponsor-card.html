@@ -1,0 +1,11 @@
+{%- assign sponsor = include.sponsor -%}
+{%- assign extra_class = include.extra_class -%}
+{%- assign tag = "div" -%}
+{%- if sponsor.url -%}{%- assign tag = "a" -%}{%- endif -%}
+<{{ tag }} class="sponsor-card{% if extra_class %} {{ extra_class }}{% endif %}{% unless sponsor.logo %} sponsor-card-text{% endunless %}"{% if sponsor.url %} href="{{ sponsor.url }}" target="_blank" rel="noopener" aria-label="{{ sponsor.name }} (öffnet in neuem Tab)"{% endif %}>
+  {%- if sponsor.logo -%}
+    <img src="{{ '/assets/img/sponsoren/' | append: sponsor.logo | relative_url }}" alt="{{ sponsor.name }}" loading="lazy">
+  {%- else -%}
+    <span>{{ sponsor.name }}</span>
+  {%- endif -%}
+</{{ tag }}>

@@ -3,8 +3,6 @@
 # ----------------------------------------------------------------
 title: "Wonderbrass"
 tagline: "Blechsound Pur"
-description: >-
-  Offizielle Website von Wonderbrass – Konzerte, Termine und Kontakt.
 lang: de
 
 # Wird u.a. für kanonische URLs / Sitemap / RSS benötigt.
@@ -18,6 +16,7 @@ baseurl: "/wonderbrass-blechsound.de"
 contact:
   organisation: "Wonderbrass GbR"
   admin: "Mathias Kessler"
+  owner: "Alexander Unmuth"
   email: "info@wonderbrass-blechsound.de"
   address_line1: "Kirchsteige 10"
   address_line2: "72393 Burladingen"

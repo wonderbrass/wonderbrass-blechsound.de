@@ -1,0 +1,21 @@
+# Bandmitglieder – Name, Instrument, Foto.
+# "foto" ist optional: sobald ein Bandfoto vorliegt, hier den Dateinamen aus
+# assets/img/mitglieder/ eintragen – ohne "foto" wird ein Platzhalter-Icon
+# angezeigt.
+# Reihenfolge = Darstellungsreihenfolge auf der Seite.
+- name: "Alexander Unmuth"
+  instrument: "Tuba"
+- name: "Martin Dietrich"
+  instrument: "Trompete"
+- name: "Matthias Herter"
+  instrument: "Trompete"
+- name: "Gerhard Bitzer"
+  instrument: "Trompete"
+- name: "Levin Winter"
+  instrument: "Posaune"
+- name: "Christof Seeger"
+  instrument: "Tenorhorn"
+- name: "Simon Riehle"
+  instrument: "Schlagzeug"
+- name: "Mathias Kessler"
+  instrument: "Horn"

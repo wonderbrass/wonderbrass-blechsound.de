@@ -1,0 +1,52 @@
+# Sponsoren – Logo, Name, Website.
+# "haupt: true" = Hauptsponsoren, werden auf sponsoren.html oben in einem
+# eigenen, größer dargestellten Block angezeigt.
+# "url" und "logo" sind optional – ohne Logo wird stattdessen der Name als
+# Text angezeigt, ohne "url" ist die Karte nicht verlinkt.
+# Reihenfolge = Darstellungsreihenfolge auf der Seite (innerhalb der Gruppe).
+- name: "Heizungsbau Maichle"
+  url: "https://www.heizungsbau-maichle.de/"
+  logo: "maichle.png"
+  haupt: true
+- name: "MD Küchen"
+  url: "https://www.md-küchen.de/"
+  logo: "md-kuechen.jpg"
+  haupt: true
+- name: "Unmuth Qualitätswerkzeuge"
+  url: "https://www.unmuth-werkzeuge.de/"
+  logo: "unmuth.png"
+  haupt: true
+- name: "Werbetechnik Emele"
+  url: "https://www.werbetechnik-emele.de/"
+  logo: "emele.png"
+- name: "BMW Service Bühler Ruff"
+  url: "https://www.bmw-service-buehler-ruff.de/de/home/"
+  logo: "buehler-ruff.png"
+- name: "Mercedes-Benz Kalbacher"
+  url: "https://www.mercedes-benz-kalbacher.de/de/desktop/home.html"
+  logo: "kalbacher.png"
+- name: "Schöser"
+  url: "https://shop.schoser.de/gx2/de/"
+  logo: "schoeser.gif"
+- name: "Rupp Bauunternehmung"
+  url: "https://www.rupp-bauunternehmung.de/"
+  logo: "rupp.png"
+- name: "Rieber Transporte"
+  url: "https://burladingen.rieber-transporte.de/"
+  logo: "rieber.jpg"
+- name: "CT Bauprofi"
+  url: "https://www.ct-bauprofi.com/startseite/"
+  logo: "ct-bauprofi.jpg"
+- name: "Krumpholz Gartenwerkzeuge"
+  url: "https://www.krumpholz-gartenwerkzeug.de/"
+  logo: "krumpholz.png"
+- name: "Gebr. Pfister Zimmergeschäft"
+- name: "Stielfabrik Röcker"
+  url: "https://www.stielfabrik-roecker.de/"
+  logo: "roecker.jpg"
+- name: "Rauscher Berufsbekleidung"
+  url: "https://www.rauscher-berufsbekleidung.de/"
+  logo: "rauscher.png"
+- name: "König Anhänger"
+  url: "https://koenig-anhaenger.de/"
+  logo: "koenig.png"
