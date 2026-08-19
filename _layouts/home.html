@@ -3,12 +3,16 @@ layout: default
 ---
 
 <section class="hero">
-  <div class="hero-inner">
-    <h1 class="mb-0">
-      <span class="hero-logo" role="img" aria-label="{{ site.title }} – {{ site.tagline }}">
-        {% include_relative assets/brand/WB-Schriftzug.svg %}
-      </span>
-    </h1>
+  <div class="container">
+    <div class="hero-inner">
+      <h1 class="mb-0">
+        <a class="hero-brand" href="{{ '/' | relative_url }}" aria-label="{{ site.title }} – zur Startseite">
+          <span class="hero-logo">
+            {% include_relative assets/brand/WB-Schriftzug.svg %}
+          </span>
+        </a>
+      </h1>
+    </div>
   </div>
 </section>
 

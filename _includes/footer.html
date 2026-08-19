@@ -16,27 +16,36 @@
           <a href="{{ site.social.instagram }}" target="_blank" rel="noopener" aria-label="Instagram">
             <i class="fa-brands fa-instagram" aria-hidden="true"></i>
           </a>
-          <a href="{{ site.social.facebook }}" target="_blank" rel="noopener" aria-label="Facebook">
-            <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
-          </a>
-          <a href="{{ site.social.youtube }}" target="_blank" rel="noopener" aria-label="YouTube">
+          <!--<a href="{{ site.social.youtube }}" target="_blank" rel="noopener" aria-label="YouTube">
             <i class="fa-brands fa-youtube" aria-hidden="true"></i>
-          </a>
+          </a>-->
         </div>
       </div>
 
       <div class="col-md-4 text-center text-md-end">
-        <img src="{{ '/assets/brand/WB-Logo.svg' | relative_url }}" alt="{{ site.title }}" class="footer-logo">
+        <h2 class="h5 text-uppercase" style="color:#B0892D;">Sponsoren</h2>
+        <div class="footer-sponsors">
+          {% assign hauptsponsoren = site.data.sponsoren | where: "haupt", true %}
+          {% for sponsor in hauptsponsoren %}
+            <a href="{{ sponsor.url }}" target="_blank" rel="noopener" aria-label="{{ sponsor.name }} (öffnet in neuem Tab)">
+              <img src="{{ '/assets/img/sponsoren/' | append: sponsor.logo | relative_url }}" alt="{{ sponsor.name }}" loading="lazy">
+            </a>
+          {% endfor %}
+        </div>
+        <p class="mb-0 mt-2">
+          <a href="{{ '/sponsoren/' | relative_url }}">Alle Sponsoren</a>
+        </p>
       </div>
     </div>
 
     <hr class="border-secondary my-4">
 
-    <div class="d-flex flex-column flex-md-row justify-content-between text-center text-md-start small">
-      <p class="mb-2 mb-md-0">&copy; {{ site.time | date: "%Y" }} {{ site.title }}</p>
-      <p class="mb-0">
+    <div class="footer-legal d-flex flex-column flex-md-row align-items-center text-center small gap-3">
+      <p class="mb-0 footer-legal-side text-md-start">
         <a href="{{ '/impressum/' | relative_url }}">Impressum &amp; Datenschutz</a>
       </p>
+      <img src="{{ '/assets/brand/WB-Logo-Light.svg' | relative_url }}" alt="{{ site.title }}" class="footer-mark">
+      <p class="mb-0 footer-legal-side text-md-end">&copy; {{ site.time | date: "%Y" }} {{ site.title }}</p>
     </div>
   </div>
 </footer>

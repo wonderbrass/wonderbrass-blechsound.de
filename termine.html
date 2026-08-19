@@ -30,62 +30,66 @@ description: "Alle Konzert- und Auftrittstermine der Brass Combo."
   </section>
 {% endif %}
 
-{% if weitere_anzahl > 0 or site.data.termine_vergangen.size > 0 or naechster == nil %}
+{% if weitere_anzahl > 0 %}
   <section class="section bg-tertiary">
     <div class="container">
-      {% if weitere_anzahl > 0 %}
-        <h2 class="section-title d-block text-center mx-auto mb-4" style="width: fit-content;">Weitere Termine</h2>
-        <div class="row g-4 justify-content-center">
-          {% for termin in site.data.termine offset: 1 %}
-            <div class="col-md-6 col-lg-4">
-              <div class="gig-card p-3 h-100">
-                <p class="gig-date mb-1">
-                  {{ termin.wochentag_kurz }}, {{ termin.tag }}. {{ termin.monat_kurz }} {{ termin.jahr }}
-                  {%- unless termin.zeit_unbekannt -%}
-                    , {{ termin.uhrzeit_start }}{% if termin.uhrzeit_ende and termin.uhrzeit_ende != termin.uhrzeit_start %}–{{ termin.uhrzeit_ende }}{% endif %} Uhr
-                  {%- endunless %}
-                </p>
-                <p class="fw-semibold mb-1 mt-2">{{ termin.titel }}</p>
-                {% if termin.beschreibung != "" %}
-                  <p class="mb-1">{{ termin.beschreibung }}</p>
-                {% endif %}
-                {% if termin.ort != "" %}
-                  <p class="mb-0 text-muted">{{ termin.ort }}</p>
-                {% endif %}
-              </div>
+      <h2 class="section-title d-block text-center mx-auto mb-4" style="width: fit-content;">Weitere Termine</h2>
+      <div class="row g-4 justify-content-center">
+        {% for termin in site.data.termine offset: 1 %}
+          <div class="col-md-6 col-lg-4">
+            <div class="gig-card p-3 h-100">
+              <p class="gig-date mb-1">
+                {{ termin.wochentag_kurz }}, {{ termin.tag }}. {{ termin.monat_kurz }} {{ termin.jahr }}
+                {%- unless termin.zeit_unbekannt -%}
+                  , {{ termin.uhrzeit_start }}{% if termin.uhrzeit_ende and termin.uhrzeit_ende != termin.uhrzeit_start %}–{{ termin.uhrzeit_ende }}{% endif %} Uhr
+                {%- endunless %}
+              </p>
+              <p class="fw-semibold mb-1 mt-2">{{ termin.titel }}</p>
+              {% if termin.beschreibung != "" %}
+                <p class="mb-1">{{ termin.beschreibung }}</p>
+              {% endif %}
+              {% if termin.ort != "" %}
+                <p class="mb-0 text-muted">{{ termin.ort }}</p>
+              {% endif %}
             </div>
-          {% endfor %}
-        </div>
-      {% endif %}
-
-      {% unless naechster %}
-        <div class="gig-card p-3">
-          <p class="mb-0">
-            Aktuell sind keine Termine geplant – schaut bald wieder vorbei.
-          </p>
-        </div>
-      {% endunless %}
-    </div>
-
-    {% if site.data.termine_vergangen.size > 0 %}
-      <div class="container{% if weitere_anzahl > 0 %} mt-4 pt-4{% endif %}">
-        <h2 class="section-title d-block text-center mx-auto mb-4" style="width: fit-content;">Vergangene Termine</h2>
-        <div class="row g-4 justify-content-center">
-          {% for termin in site.data.termine_vergangen %}
-            <div class="col-md-6 col-lg-4">
-              <div class="gig-card gig-card-past p-3 h-100">
-                <p class="gig-date mb-1">
-                  {{ termin.wochentag_kurz }}, {{ termin.tag }}. {{ termin.monat_kurz }} {{ termin.jahr }}
-                </p>
-                <p class="fw-semibold mb-1 mt-2">{{ termin.titel }}</p>
-                {% if termin.ort != "" %}
-                  <p class="mb-0 text-muted">{{ termin.ort }}</p>
-                {% endif %}
-              </div>
-            </div>
-          {% endfor %}
-        </div>
+          </div>
+        {% endfor %}
       </div>
-    {% endif %}
+    </div>
+  </section>
+{% endif %}
+
+{% unless naechster %}
+  <section class="section bg-tertiary">
+    <div class="container">
+      <div class="gig-card p-3">
+        <p class="mb-0">
+          Aktuell sind keine Termine geplant – schaut bald wieder vorbei.
+        </p>
+      </div>
+    </div>
+  </section>
+{% endunless %}
+
+{% if site.data.termine_vergangen.size > 0 %}
+  <section class="section bg-tertiary">
+    <div class="container">
+      <h2 class="section-title d-block text-center mx-auto mb-4" style="width: fit-content;">Vergangene Termine</h2>
+      <div class="row g-4 justify-content-center">
+        {% for termin in site.data.termine_vergangen %}
+          <div class="col-md-6 col-lg-4">
+            <div class="gig-card gig-card-past p-3 h-100">
+              <p class="gig-date mb-1">
+                {{ termin.wochentag_kurz }}, {{ termin.tag }}. {{ termin.monat_kurz }} {{ termin.jahr }}
+              </p>
+              <p class="fw-semibold mb-1 mt-2">{{ termin.titel }}</p>
+              {% if termin.ort != "" %}
+                <p class="mb-0 text-muted">{{ termin.ort }}</p>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
   </section>
 {% endif %}

@@ -6,68 +6,37 @@ p {
 }
 
 // ------------------------------------------------------------------
-// Navigation
-// ------------------------------------------------------------------
-.navbar-brasscombo {
-  background-color: $brass-dark;
-
-  .navbar-nav {
-    // Nur 4 Punkte – auf dem Handy nicht hinter einem Hamburger-Menü
-    // verstecken, sondern direkt anzeigen.
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .nav-item {
-    text-align: center;
-  }
-
-  .nav-link {
-    text-transform: uppercase;
-    font-size: .85rem;
-    letter-spacing: .08em;
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
-  }
-
-  // Unter 576px passen nicht alle 4 Punkte in eine Zeile. Statt natürlich
-  // (und damit ungleichmäßig, z.B. 3+1) umzubrechen, immer ein festes
-  // 2×2-Raster erzwingen.
-  @media (max-width: 576px) {
-    .nav-item {
-      flex: 0 0 50%;
-      max-width: 50%;
-    }
-
-    .nav-link {
-      font-size: .8rem;
-      letter-spacing: .04em;
-      padding-top: .5rem;
-      padding-bottom: .5rem;
-    }
-  }
-}
-
-// ------------------------------------------------------------------
 // Hero-Bereich (Startseite)
 // ------------------------------------------------------------------
 .hero {
   background-color: $brass-tertiary-bg;
-  padding: 1rem 1rem 1rem;
+  padding: .5rem 1rem;
   text-align: center;
 
-  // Schriftzug ist für hellen Untergrund gestaltet – auf der hellen
-  // Tertiärfarbe des Hero-Bereichs kommt er direkt zur Geltung, ganz ohne
-  // Hintergrund-Chip. Inline statt <img> eingebunden, damit die SVG-Texte
-  // unsere selbstgehostete Trajan-Pro-Schrift nutzen können (als <img> hat
-  // das SVG keinen Zugriff auf die Seiten-Fonts und fällt auf eine
-  // Ersatzschrift mit falschen Zeichenabständen zurück).
+  // Logo + Schriftzug sind für hellen Untergrund gestaltet – auf der
+  // hellen Tertiärfarbe des Hero-Bereichs kommen sie direkt zur Geltung,
+  // ganz ohne Hintergrund-Chip. Schriftzug inline statt <img> eingebunden,
+  // damit die SVG-Texte unsere selbstgehostete Trajan-Pro-Schrift nutzen
+  // können (als <img> hat das SVG keinen Zugriff auf die Seiten-Fonts und
+  // fällt auf eine Ersatzschrift mit falschen Zeichenabständen zurück).
+  // Das Logo hat dagegen keine live-Texte und darf ein <img> sein.
+  //
+  // WICHTIG: display:block (nicht inline-block!). Als inline-block hätte
+  // .hero-brand keine definierte eigene Breite (schrumpft auf den Inhalt),
+  // wodurch das "width:100%" von .hero-logo ins Leere lief – das SVG hat
+  // selbst kein festes Seitenverhältnis in px, also griff der Browser auf
+  // seine Standardgröße für Ersatzelemente zurück (~300px) und ignorierte
+  // damit faktisch jeden max-width-Wert auf .hero-logo. Als Block bekommt
+  // .hero-logo dagegen die volle Container-Breite als Bezugsgröße.
+  .hero-brand {
+    display: block;
+  }
+
   .hero-logo {
     display: block;
-    width: 90%;
-    max-width: 420px;
-    margin: 0 auto 1rem;
+    width: 100%;
+    max-width: 540px;
+    margin: 0 auto;
 
     svg {
       display: block;
@@ -89,13 +58,31 @@ p {
 }
 
 .section-title {
+  position: relative;
   font-family: $font-family-headline;
   text-transform: uppercase;
   letter-spacing: .04em;
-  border-bottom: 3px solid $brass-gold;
   display: inline-block;
-  padding-bottom: .35rem;
+  padding-bottom: 1.25rem;
   margin-bottom: 2rem;
+
+  // Zierlinie aus dem Schriftzug als Unterstreichung wiederverwendet
+  // (../brand/ ist relativ zur kompilierten assets/css/main.css). Breite
+  // 100% statt fest, damit sie immer genau die Breite der Überschrift
+  // einnimmt (.section-title ist inline-block, seine Breite richtet sich
+  // also nach dem Textinhalt).
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 14px;
+    background-image: url("../brand/WB-Undeline.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% auto;
+  }
 }
 
 .bg-tertiary {
@@ -287,14 +274,55 @@ p {
   background-color: $brass-dark;
   color: rgba($brass-white, .8);
 
-  // Logo ist für hellen Untergrund gestaltet – braucht auf dem
-  // dunklen Footer einen hellen Hintergrund-Chip.
-  .footer-logo {
-    height: 7rem;
+  // Einfarbig-helle Logovariante, da sie auf dem dunklen Footer liegt. Sitzt
+  // in der Copyright-Zeile, statt in einer eigenen Reihe zu stehen – kann
+  // dadurch relativ zur Zeilenhöhe recht groß sein, ohne dass der Footer
+  // insgesamt höher wird.
+  .footer-mark {
+    height: 8rem;
     width: auto;
-    padding: .5rem;
-    background-color: $brass-white;
-    border-radius: $border-radius;
+    flex-shrink: 0;
+  }
+
+  // Copyright-Text und Impressum-Link müssen exakt gleich breit sein,
+  // sonst landet das Logo dazwischen nicht wirklich mittig, sondern nur
+  // im rechnerischen Zwischenraum von "justify-content: space-between"
+  // (der bei unterschiedlich langen Texten links/rechts nicht symmetrisch
+  // ist). flex-basis 0 + gleicher flex-grow erzwingt gleiche Breite.
+  .footer-legal-side {
+    flex: 0 0 auto;
+
+    @media (min-width: 768px) {
+      flex: 1 1 0;
+    }
+  }
+
+  .footer-sponsors {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .5rem;
+
+    @media (min-width: 768px) {
+      justify-content: flex-end;
+    }
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 4.5rem;
+      height: 3rem;
+      background-color: $brass-white;
+      border-radius: $border-radius-sm;
+      padding: .35rem;
+    }
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
   }
 
   a {

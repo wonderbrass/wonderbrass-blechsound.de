@@ -1,9 +1,7 @@
-# Brass Combo – Website (Jekyll + Bootstrap Sass)
+# Wonderbrass – Website
 
-Grundstruktur für die Bandwebsite, strukturell an **viera-blech.at** angelehnt
-(Logo + Navigation, großer Hero-Bereich, Termine, Footer mit Bandkontakt &
-Social Media), umgesetzt mit **Jekyll** und **Bootstrap als Sass-Version**,
-bereit für **GitHub Pages**.
+Offizielle Website von Wonderbrass, umgesetzt mit **Jekyll** und
+**Bootstrap als Sass-Version**, gehostet auf **GitHub Pages**.
 
 ## Farben
 
@@ -22,7 +20,6 @@ Definiert in `_sass/_variables.scss` – dort auch die Bootstrap-Farb-Map
 .
 ├── _config.yml            # Grundeinstellungen, Bandkontakt, Social Links
 ├── _data/
-│   ├── navigation.yml      # Hauptnavigation (frei erweiterbar)
 │   ├── mitglieder.yml      # Bandmitglieder (Name, Instrument, optional Foto)
 │   ├── anlaesse.yml        # Anlässe auf der Seite "Über uns" (Name + Icon)
 │   ├── sponsoren.yml       # Sponsoren (Name, Logo, Website, optional "haupt")
@@ -31,40 +28,50 @@ Definiert in `_sass/_variables.scss` – dort auch die Bootstrap-Farb-Map
 │   │                        # überschrieben)
 │   └── termine_vergangen.yml   # vergangene Termine des laufenden
 │                                # Kalenderjahres (dito automatisch)
-├── _includes/               # head, header/navbar, footer
-├── _layouts/                 # default, page, home
+├── _includes/               # head, footer, sponsor-card
+├── _layouts/                 # default, home (Schriftzug-Hero + Klick auf Startseite)
 ├── _plugins/
 │   └── bootstrap_sass_paths.rb   # bindet den Sass-Quellordner der Bootstrap-Gem ein
 ├── _sass/
 │   ├── _variables.scss     # Bootstrap-Variablen VOR dem Import überschreiben
-│   └── _custom.scss        # eigene Komponenten (Hero, Navbar, Karten, Footer)
+│   └── _custom.scss        # eigene Komponenten (Hero, Karten, Footer, Sektionen)
 ├── assets/
 │   ├── css/main.scss       # Sass-Einstiegspunkt → wird zu assets/css/main.css
 │   ├── js/main.js
+│   ├── brand/               # Logo, Schriftzug, Unterstreichung (SVG)
 │   ├── vendor/fontawesome/  # lokal gehostetes Font Awesome (Icons)
-│   └── img/                # eigene Bilder (Favicon etc.) hier ablegen
+│   └── img/                # eigene Bilder (Favicon, Sponsoren-Logos etc.)
 ├── script/
 │   └── fetch_termine.rb    # holt Termine von der Konzertmeister-API
-├── index.html, ueber-uns.md, termine.html, sponsoren.html
-├── impressum.md
+├── index.html, ueber-uns.html, termine.html, sponsoren.html, impressum.html
 ├── Gemfile
-└── .github/workflows/pages.yml   # Build & Deploy nach GitHub Pages
+└── .github/workflows/
+    ├── pages.yml            # Build & Deploy nach GitHub Pages
+    └── release.yml          # automatisches Release-Tagging
 ```
 
-## Warum ein GitHub-Actions-Workflow?
+## GitHub-Actions-Workflows
 
 GitHub Pages baut Jekyll-Seiten standardmäßig im **Safe Mode** mit dem
 `github-pages`-Gem und lässt dabei keine zusätzlichen Gems wie `bootstrap`
 oder eigene `_plugins` zu. Deshalb baut `.github/workflows/pages.yml` die
 Seite selbst per `bundle exec jekyll build` und lädt nur das fertige
-`_site`-Verzeichnis zu GitHub Pages hoch.
+`_site`-Verzeichnis zu GitHub Pages hoch. Zusätzlich zum Push nach `main`
+baut der Workflow die Seite auch täglich per `schedule` neu, damit
+neue/geänderte Konzertmeister-Termine auch ohne Code-Änderung erscheinen.
 
 **Einmalig im Repository einrichten:** Settings → Pages → *Build and
 deployment* → Source auf **„GitHub Actions"** stellen.
 
+`.github/workflows/release.yml` erstellt bei jedem Push nach `main`
+automatisch einen Git-Tag + GitHub-Release nach dem Schema
+`YYYY.MM.VERSION` (z.&nbsp;B. `2026.08.1`) – `VERSION` zählt pro
+Kalendermonat neu ab 1 hoch. Kein manuelles Einrichten nötig, läuft mit den
+Standard-Repository-Rechten (`contents: write`).
+
 ## Konzertmeister-API (Termine)
 
-Die Termine werden nicht mehr manuell gepflegt, sondern bei jedem Build von
+Die Termine werden nicht manuell gepflegt, sondern bei jedem Build von
 [Konzertmeister](https://konzertmeister.app) über `script/fetch_termine.rb`
 abgerufen. Übernommen werden nur Termine vom Typ *Performance*, mit Status
 *aktiv* und die von der Band explizit für die öffentliche Website
@@ -73,9 +80,11 @@ schreibt zwei Dateien:
 
 - `_data/termine.yml` – alle kommenden Termine.
 - `_data/termine_vergangen.yml` – bereits stattgefundene Termine des
-  laufenden Kalenderjahres (ab 1. Januar), neueste zuerst. Werden auf
-  `termine.html` unterhalb der kommenden Termine in einem eigenen,
-  optisch zurückhaltenderen Block angezeigt.
+  laufenden Kalenderjahres (ab 1. Januar), neueste zuerst.
+
+**API-Key erstellen:** In der [Konzertmeister-Web-App](https://web.konzertmeister.app)
+unter den Organisationseinstellungen einen API-Key für die M2M-Schnittstelle
+anlegen.
 
 **API-Key sicher hinterlegen:** Ein Konzertmeister-API-Key darf **niemals**
 im Repository landen (GitHub Pages ist immer öffentlich erreichbar, egal ob
@@ -88,9 +97,7 @@ Name `KONZERTMEISTER_API_KEY`, Wert der API-Key.
 Der Workflow (`.github/workflows/pages.yml`) reicht das Secret nur während
 des Build-Jobs als Umgebungsvariable an das Fetch-Script durch – der Key
 landet nie im ausgelieferten `_site`-Verzeichnis und ist für Website-
-Besucher:innen nicht einsehbar. Zusätzlich zum Push-Trigger baut der
-Workflow die Seite auch täglich per `schedule` neu, damit neue/geänderte
-Termine auch ohne Code-Änderung erscheinen.
+Besucher:innen nicht einsehbar.
 
 **Lokal mit echten Daten arbeiten** (optional): Key nur für den einen
 Aufruf als Umgebungsvariable setzen, nicht dauerhaft exportieren:
@@ -102,30 +109,3 @@ KONZERTMEISTER_API_KEY="dein-key" bundle exec ruby script/fetch_termine.rb
 Ohne gesetzten Key bleiben die zuletzt im Repo vorhandenen
 `_data/termine*.yml` unverändert – lokales Entwickeln funktioniert also auch
 ohne Key.
-
-## Lokal entwickeln
-
-```bash
-bundle install
-bundle exec jekyll serve
-# → http://localhost:4000/brass-combo/
-```
-
-## Vor dem ersten Deploy anpassen
-
-1. `_config.yml`: `title`, `tagline`, `description`, `url`, `baseurl`
-   (`baseurl` = `""`, falls die Seite unter einer eigenen Domain statt
-   `<user>.github.io/<repo>` läuft) sowie `contact:` und `social:`.
-2. `assets/img/`: eigenes Favicon als `favicon.png` ablegen.
-3. `KONZERTMEISTER_API_KEY`-Secret hinterlegen (siehe oben), damit echte
-   Termine erscheinen.
-4. `ueber-uns.md`: Bandtext & Besetzung ersetzen.
-5. Texte auf `impressum.md` ergänzen (in Österreich Pflichtangaben nach
-   § 5 ECG bzw. § 25 MedienG). Enthält Impressum &amp; Datenschutz in einem.
-
-## Bootstrap anpassen
-
-Alle Bootstrap-Sass-Variablen (Radius, Abstände, Schriftgrößen, weitere
-Farben) lassen sich in `_sass/_variables.scss` **vor** `@import "bootstrap"`
-überschreiben – siehe die offizielle Bootstrap-Sass-Doku für die komplette
-Variablenliste.
