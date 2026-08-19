@@ -1,0 +1,39 @@
+---
+layout: page
+title: Kontakt
+description: "Kontaktiert die Brass Combo für Buchungen und Anfragen."
+---
+
+<div class="row g-5">
+  <div class="col-lg-6">
+    <h2 class="h4">Buchungsanfragen &amp; Kontakt</h2>
+    <p>{{ site.contact.address_line1 }}<br>{{ site.contact.address_line2 }}</p>
+    <p>
+      Tel.: <a href="tel:{{ site.contact.phone | remove: ' ' }}">{{ site.contact.phone }}</a><br>
+      E-Mail: <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>
+    </p>
+  </div>
+
+  <div class="col-lg-6">
+    <h2 class="h4">Nachricht senden</h2>
+    <p class="text-muted small">
+      Statisches Formular-Grundgerüst – für die Zustellung z.&nbsp;B. an einen
+      Formular-Dienst wie Formspree anbinden (<code>action</code>-Attribut anpassen).
+    </p>
+    <form action="https://formspree.io/f/DEINE-FORM-ID" method="POST">
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">E-Mail</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+      </div>
+      <div class="mb-3">
+        <label for="nachricht" class="form-label">Nachricht</label>
+        <textarea class="form-control" id="nachricht" name="nachricht" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary text-uppercase">Absenden</button>
+    </form>
+  </div>
+</div>

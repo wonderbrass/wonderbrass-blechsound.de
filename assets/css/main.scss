@@ -1,0 +1,8 @@
+---
+# Front Matter (auch leer) ist nötig, damit Jekyll diese Datei
+# als Sass-Einstiegspunkt erkennt und nach assets/css/main.css baut.
+---
+
+@import "variables";
+@import "bootstrap";
+@import "custom";

@@ -1,0 +1,60 @@
+# ----------------------------------------------------------------
+# Grundeinstellungen – bitte an eure Band anpassen
+# ----------------------------------------------------------------
+title: "Wonderbrass"
+tagline: "Blechsound Pur"
+description: >-
+  Offizielle Website von Wonderbrass – Konzerte, Termine, Fotos und Kontakt.
+lang: de
+
+# Wird u.a. für kanonische URLs / Sitemap / RSS benötigt.
+# Für GitHub Pages im Schema https://<user>.github.io/<repo>
+url: "https://euer-username.github.io"
+baseurl: "/wonderbrass"
+
+# ----------------------------------------------------------------
+# Bandkontakt (im Footer & auf der Kontaktseite genutzt)
+# ----------------------------------------------------------------
+contact:
+  email: "info@wonderbrass-blechsound.de"
+  phone: "+49 174 7402635"
+  address_line1: "Kirchsteige 10"
+  address_line2: "72393 Burladingen"
+
+social:
+  instagram: "https://instagram.com/"
+  facebook: "https://facebook.com/"
+  youtube: "https://youtube.com/"
+
+# ----------------------------------------------------------------
+# Sass / Bootstrap
+# ----------------------------------------------------------------
+sass:
+  style: compressed
+  load_paths:
+    - _sass
+
+# ----------------------------------------------------------------
+# Build
+# ----------------------------------------------------------------
+markdown: kramdown
+permalink: pretty
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - node_modules
+  - README.md
+  - "*.gemspec"
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "page"

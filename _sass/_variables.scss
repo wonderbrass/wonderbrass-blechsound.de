@@ -1,0 +1,58 @@
+// ------------------------------------------------------------------
+// Farbpalette der Brass Combo
+// ------------------------------------------------------------------
+$brass-gold:  #B0892D; // Primärfarbe – Messing-Ton der Instrumente
+$brass-dark:  #252525; // Sekundärfarbe – Fließtext, dunkle Flächen
+$brass-grey:  #C4C4C4; // Tertiärfarbe – Trennlinien, dezente Flächen
+$brass-white: #FFFFFF;
+
+// ------------------------------------------------------------------
+// Bootstrap-Theme-Farben mappen, BEVOR bootstrap importiert wird
+// ------------------------------------------------------------------
+$primary:   $brass-gold;
+$secondary: $brass-dark;
+$dark:      $brass-dark;
+$light:     $brass-grey;
+
+$theme-colors: (
+  "primary":   $primary,
+  "secondary": $secondary,
+  "success":   #4C7A3D,
+  "info":      #3E6B8A,
+  "warning":   #C9A227,
+  "danger":    #A5342A,
+  "light":     $light,
+  "dark":      $dark
+);
+
+// ------------------------------------------------------------------
+// Typografie
+// Headline: Oswald – kräftig, kondensiert, wirkt wie Konzert-Plakate
+// Fließtext: Source Sans 3 – ruhig und gut lesbar
+// (Google Fonts werden in _includes/head.html eingebunden)
+// ------------------------------------------------------------------
+$font-family-headline: "Oswald", "Arial Narrow", sans-serif;
+$font-family-sans-serif: "Source Sans 3", "Segoe UI", Roboto, sans-serif;
+$font-family-base: $font-family-sans-serif;
+
+$body-color: $brass-dark;
+$body-bg:    $brass-white;
+
+$link-color: $brass-gold;
+$link-hover-color: darken($brass-gold, 12%);
+
+$border-radius:      0.15rem;
+$border-radius-sm:   0.1rem;
+$border-radius-lg:   0.2rem;
+
+$navbar-dark-color:            rgba($brass-white, .85);
+$navbar-dark-hover-color:      $brass-white;
+$navbar-dark-active-color:     $brass-gold;
+
+$headings-font-family: $font-family-headline;
+$headings-font-weight: 600;
+$headings-color:       $brass-dark;
+
+// Etwas mehr Kontrast/Größe für ein bühnentaugliches Erscheinungsbild
+$h1-font-size: 3rem;
+$h2-font-size: 2.25rem;

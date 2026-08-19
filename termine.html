@@ -1,0 +1,17 @@
+---
+layout: page
+title: Termine
+description: "Alle Konzert- und Auftrittstermine der Brass Combo."
+---
+
+<div class="list-group">
+  {% for termin in site.data.termine %}
+    <div class="list-group-item gig-card mb-3 p-3">
+      <div class="d-flex justify-content-between flex-wrap">
+        <span class="gig-date">{{ termin.datum }}</span>
+      </div>
+      <p class="fw-semibold mb-1 mt-2">{{ termin.titel }}</p>
+      <p class="mb-0 text-muted">{{ termin.ort }}</p>
+    </div>
+  {% endfor %}
+</div>

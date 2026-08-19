@@ -1,0 +1,64 @@
+---
+layout: home
+title: Home
+---
+
+<section class="hero" style="background-image: url('{{ '/assets/img/hero-bg.jpg' | relative_url }}');">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Live &amp; unplugged</p>
+    <h1>{{ site.tagline }}</h1>
+    <p class="lead col-lg-8 mx-auto">
+      {{ site.description }}
+    </p>
+    <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+      <a class="btn btn-primary btn-lg text-uppercase" href="{{ '/termine/' | relative_url }}">
+        Termine ansehen
+      </a>
+      <a class="btn btn-outline-light btn-lg text-uppercase" href="{{ '/kontakt/' | relative_url }}">
+        Kontakt aufnehmen
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container text-center">
+    <h2 class="section-title">Über die Band</h2>
+    <p class="col-lg-8 mx-auto">
+      Kurzer Einstiegstext über eure Brass Combo: Besetzung, Stil und was euch auf
+      der Bühne ausmacht. Dieser Absatz kann später gegen echten Bandtext getauscht
+      werden – z.&nbsp;B. auf der Seite <a href="{{ '/ueber-uns/' | relative_url }}">Über uns</a>.
+    </p>
+  </div>
+</section>
+
+<section class="section bg-tertiary">
+  <div class="container">
+    <h2 class="section-title">Nächste Termine</h2>
+    <div class="row g-4">
+      {% if site.data.termine %}
+        {% for termin in site.data.termine limit:3 %}
+          <div class="col-md-4">
+            <div class="gig-card p-3 h-100 bg-white">
+              <p class="gig-date mb-1">{{ termin.datum }}</p>
+              <p class="fw-semibold mb-1">{{ termin.titel }}</p>
+              <p class="mb-0 text-muted">{{ termin.ort }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="col-12">
+          <div class="gig-card p-3 bg-white">
+            <p class="mb-0">
+              Noch keine Termine gepflegt – siehe <code>_data/termine.yml</code> bzw.
+              die Seite <a href="{{ '/termine/' | relative_url }}">Termine</a>.
+            </p>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+    <div class="text-center mt-4">
+      <a class="btn btn-primary text-uppercase" href="{{ '/termine/' | relative_url }}">Alle Termine</a>
+    </div>
+  </div>
+</section>

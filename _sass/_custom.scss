@@ -1,0 +1,154 @@
+// ------------------------------------------------------------------
+// Navigation
+// ------------------------------------------------------------------
+.navbar-brand {
+  font-family: $font-family-headline;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.navbar-brasscombo {
+  background-color: $brass-dark;
+
+  .nav-link {
+    text-transform: uppercase;
+    font-size: .85rem;
+    letter-spacing: .08em;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+// ------------------------------------------------------------------
+// Hero-Bereich (Startseite)
+// ------------------------------------------------------------------
+.hero {
+  position: relative;
+  color: $brass-white;
+  background-color: $brass-dark;
+  background-size: cover;
+  background-position: center;
+  padding: 7rem 1rem;
+  text-align: center;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba($brass-dark, .55) 0%, rgba($brass-dark, .85) 100%);
+    z-index: 0;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: .25em;
+    font-size: .85rem;
+    color: $brass-gold;
+    margin-bottom: .75rem;
+  }
+
+  h1 {
+    font-family: $font-family-headline;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: $brass-white;
+  }
+
+  .lead {
+    color: rgba($brass-white, .85);
+  }
+}
+
+// ------------------------------------------------------------------
+// Abschnitte
+// ------------------------------------------------------------------
+.section {
+  padding: 4rem 0;
+}
+
+.section-title {
+  font-family: $font-family-headline;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  border-bottom: 3px solid $brass-gold;
+  display: inline-block;
+  padding-bottom: .35rem;
+  margin-bottom: 2rem;
+}
+
+.bg-tertiary {
+  background-color: rgba($brass-grey, .25);
+}
+
+// ------------------------------------------------------------------
+// Termine / Gig-Karten
+// ------------------------------------------------------------------
+.gig-card {
+  border: 1px solid $brass-grey;
+  border-left: 4px solid $brass-gold;
+  border-radius: $border-radius;
+
+  .gig-date {
+    font-family: $font-family-headline;
+    color: $brass-gold;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+}
+
+// ------------------------------------------------------------------
+// Fotogalerie
+// ------------------------------------------------------------------
+.gallery-item {
+  overflow: hidden;
+  border-radius: $border-radius;
+
+  img {
+    transition: transform .35s ease;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  &:hover img {
+    transform: scale(1.06);
+  }
+}
+
+// ------------------------------------------------------------------
+// Footer
+// ------------------------------------------------------------------
+.site-footer {
+  background-color: $brass-dark;
+  color: rgba($brass-white, .8);
+
+  a {
+    color: $brass-white;
+
+    &:hover {
+      color: $brass-gold;
+    }
+  }
+
+  .social-icons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid rgba($brass-white, .3);
+    border-radius: 50%;
+    margin-right: .5rem;
+
+    &:hover {
+      border-color: $brass-gold;
+      background-color: $brass-gold;
+      color: $brass-dark;
+    }
+  }
+}
