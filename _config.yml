@@ -10,7 +10,7 @@ lang: de
 # Wird u.a. für kanonische URLs / Sitemap / RSS benötigt.
 # Für GitHub Pages im Schema https://<user>.github.io/<repo>
 url: "https://wonderbrass.github.io"
-baseurl: ""
+baseurl: "/wonderbrass-blechsound.de"
 
 # ----------------------------------------------------------------
 # Bandkontakt (im Footer & auf der Startseite genutzt)
