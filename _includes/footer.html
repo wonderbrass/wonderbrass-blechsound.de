@@ -1,40 +1,41 @@
 <footer class="site-footer">
   <div class="container py-5">
-    <div class="row gy-4">
-      <div class="col-md-4">
-        <h2 class="h5 text-uppercase" style="color:#B0892D;">{{ site.title }}</h2>
-        <p class="mb-1">{{ site.contact.address_line1 }}</p>
-        <p>{{ site.contact.address_line2 }}</p>
-      </div>
-
-      <div class="col-md-4">
+    <div class="row gy-4 align-items-center">
+      <div class="col-md-4 text-center text-md-start">
         <h2 class="h5 text-uppercase" style="color:#B0892D;">Kontakt</h2>
-        <p class="mb-1">
-          Tel.: <a href="tel:{{ site.contact.phone | remove: ' ' }}">{{ site.contact.phone }}</a>
-        </p>
         <p>
           <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>
         </p>
+        <p class="mb-1">{{ site.contact.address_line1 }}</p>
+        <p class="mb-3">{{ site.contact.address_line2 }}</p>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-4 text-center">
         <h2 class="h5 text-uppercase" style="color:#B0892D;">Social Media</h2>
         <div class="social-icons">
-          <a href="{{ site.social.instagram }}" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
-          <a href="{{ site.social.facebook }}" target="_blank" rel="noopener" aria-label="Facebook">FB</a>
-          <a href="{{ site.social.youtube }}" target="_blank" rel="noopener" aria-label="YouTube">YT</a>
+          <a href="{{ site.social.instagram }}" target="_blank" rel="noopener" aria-label="Instagram">
+            <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+          </a>
+          <a href="{{ site.social.facebook }}" target="_blank" rel="noopener" aria-label="Facebook">
+            <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+          </a>
+          <a href="{{ site.social.youtube }}" target="_blank" rel="noopener" aria-label="YouTube">
+            <i class="fa-brands fa-youtube" aria-hidden="true"></i>
+          </a>
         </div>
+      </div>
+
+      <div class="col-md-4 text-center text-md-end">
+        <img src="{{ '/assets/brand/WB-Logo.svg' | relative_url }}" alt="{{ site.title }}" class="footer-logo">
       </div>
     </div>
 
     <hr class="border-secondary my-4">
 
-    <div class="d-flex flex-column flex-md-row justify-content-between small">
+    <div class="d-flex flex-column flex-md-row justify-content-between text-center text-md-start small">
       <p class="mb-2 mb-md-0">&copy; {{ site.time | date: "%Y" }} {{ site.title }}</p>
       <p class="mb-0">
-        <a href="{{ '/impressum/' | relative_url }}">Impressum</a>
-        &middot;
-        <a href="{{ '/datenschutz/' | relative_url }}">Datenschutz</a>
+        <a href="{{ '/impressum/' | relative_url }}">Impressum &amp; Datenschutz</a>
       </p>
     </div>
   </div>

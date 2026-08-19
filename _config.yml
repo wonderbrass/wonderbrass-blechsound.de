@@ -4,20 +4,21 @@
 title: "Wonderbrass"
 tagline: "Blechsound Pur"
 description: >-
-  Offizielle Website von Wonderbrass – Konzerte, Termine, Fotos und Kontakt.
+  Offizielle Website von Wonderbrass – Konzerte, Termine und Kontakt.
 lang: de
 
 # Wird u.a. für kanonische URLs / Sitemap / RSS benötigt.
 # Für GitHub Pages im Schema https://<user>.github.io/<repo>
-url: "https://euer-username.github.io"
-baseurl: "/wonderbrass"
+url: "https://wonderbrass.github.io"
+baseurl: ""
 
 # ----------------------------------------------------------------
-# Bandkontakt (im Footer & auf der Kontaktseite genutzt)
+# Bandkontakt (im Footer & auf der Startseite genutzt)
 # ----------------------------------------------------------------
 contact:
+  organisation: "Wonderbrass GbR"
+  admin: "Mathias Kessler"
   email: "info@wonderbrass-blechsound.de"
-  phone: "+49 174 7402635"
   address_line1: "Kirchsteige 10"
   address_line2: "72393 Burladingen"
 
@@ -33,6 +34,10 @@ sass:
   style: compressed
   load_paths:
     - _sass
+  # Unterdrückt Deprecation-Warnungen aus Abhängigkeiten (z.B. der
+  # Bootstrap-Gem) – Warnungen aus unserem eigenen _sass/-Code
+  # werden weiterhin angezeigt.
+  quiet_deps: true
 
 # ----------------------------------------------------------------
 # Build

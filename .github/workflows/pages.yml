@@ -1,0 +1,61 @@
+name: Build & Deploy nach GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Täglich um 05:00 UTC neu bauen, damit neue/geänderte Konzertmeister-
+    # Termine auch ohne Code-Änderung auf der Seite auftauchen.
+    - cron: "0 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ruby einrichten
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+          bundler-cache: true
+
+      - name: Termine von der Konzertmeister-API abrufen
+        env:
+          KONZERTMEISTER_API_KEY: ${{ secrets.KONZERTMEISTER_API_KEY }}
+        run: bundle exec ruby script/fetch_termine.rb
+
+      - name: GitHub Pages konfigurieren
+        uses: actions/configure-pages@v5
+
+      - name: Jekyll-Seite bauen
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+
+      - name: Build-Artefakt hochladen
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "_site"
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Nach GitHub Pages deployen
+        id: deployment
+        uses: actions/deploy-pages@v4

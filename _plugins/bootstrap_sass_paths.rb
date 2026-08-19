@@ -1,10 +1,15 @@
 # Registriert den Sass-Quellordner der "bootstrap"-Gem als zusätzlichen
-# Sass-Load-Path, damit `@import "bootstrap"` / `@use "bootstrap"` in
-# assets/scss/main.scss funktioniert, ohne Bootstrap manuell zu kopieren.
-require "bootstrap"
-
+# Sass-Load-Path, damit `@import "bootstrap"` in assets/css/main.scss
+# funktioniert, ohne Bootstrap manuell zu kopieren.
+#
+# Hinweis: Die "bootstrap"-Gem (twbs, ab v5) stellt keine eigene Ruby-API
+# wie `Bootstrap.load_path` mehr bereit – der Pfad wird daher direkt über
+# Gem::Specification ermittelt.
 Jekyll::Hooks.register :site, :after_init do |site|
+  spec = Gem::Specification.find_by_name("bootstrap")
+  stylesheets_path = File.join(spec.gem_dir, "assets", "stylesheets")
+
   site.config["sass"] ||= {}
   site.config["sass"]["load_paths"] ||= []
-  site.config["sass"]["load_paths"] << Bootstrap.load_path
+  site.config["sass"]["load_paths"] << stylesheets_path
 end

@@ -1,9 +1,28 @@
-- datum: "14. Sep 2026"
-  titel: "Sommerfest Musterdorf"
-  ort: "Festzelt, Musterdorf"
-- datum: "27. Sep 2026"
-  titel: "Kirchweih-Konzert"
-  ort: "Pfarrsaal, Musterstadt"
-- datum: "18. Okt 2026"
-  titel: "Herbstkonzert"
-  ort: "Stadthalle, Musterstadt"
+---
+- titel: Thanheim
+  beschreibung: Auch 2027 dürfen wir wieder die Gäste bei den Hillus Herztropfen in
+    Bisingen-Thanheim vor, zwischen und nach dem Programm musikalisch unterhalten
+  ort: ''
+  start: '2027-01-05T17:00:00Z'
+  wochentag_kurz: Di
+  wochentag_lang: Dienstag
+  tag: 5
+  monat_kurz: Jan
+  monat_lang: Januar
+  jahr: 2027
+  zeit_unbekannt: false
+  uhrzeit_start: '18:00'
+  uhrzeit_ende: '23:00'
+- titel: Summer Feelings Pfullingen
+  beschreibung: ''
+  ort: ''
+  start: '2027-07-25T10:00:00Z'
+  wochentag_kurz: So
+  wochentag_lang: Sonntag
+  tag: 25
+  monat_kurz: Jul
+  monat_lang: Juli
+  jahr: 2027
+  zeit_unbekannt: false
+  uhrzeit_start: '12:00'
+  uhrzeit_ende: '14:00'

@@ -24,40 +24,32 @@
 // Hero-Bereich (Startseite)
 // ------------------------------------------------------------------
 .hero {
-  position: relative;
   color: $brass-white;
   background-color: $brass-dark;
-  background-size: cover;
-  background-position: center;
   padding: 7rem 1rem;
   text-align: center;
 
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba($brass-dark, .55) 0%, rgba($brass-dark, .85) 100%);
-    z-index: 0;
-  }
+  // Schriftzug ist für hellen Untergrund gestaltet – braucht auf dem
+  // dunklen Hero-Hintergrund einen hellen Hintergrund-Chip. Inline statt <img>
+  // eingebunden, damit die SVG-Texte unsere selbstgehostete Trajan-Pro-
+  // Schrift nutzen können (als <img> hat das SVG keinen Zugriff auf
+  // die Seiten-Fonts und fällt auf eine Ersatzschrift mit falschen
+  // Zeichenabständen zurück).
+  .hero-logo {
+    display: block;
+    width: 90%;
+    max-width: 420px;
+    margin: 0 auto 1.5rem;
+    padding: 1.5rem 2rem;
+    background-color: $brass-white;
+    border-radius: $border-radius-lg;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
 
-  .hero-inner {
-    position: relative;
-    z-index: 1;
-  }
-
-  .hero-eyebrow {
-    text-transform: uppercase;
-    letter-spacing: .25em;
-    font-size: .85rem;
-    color: $brass-gold;
-    margin-bottom: .75rem;
-  }
-
-  h1 {
-    font-family: $font-family-headline;
-    text-transform: uppercase;
-    font-weight: 700;
-    color: $brass-white;
+    svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
   }
 
   .lead {
@@ -103,29 +95,21 @@
 }
 
 // ------------------------------------------------------------------
-// Fotogalerie
-// ------------------------------------------------------------------
-.gallery-item {
-  overflow: hidden;
-  border-radius: $border-radius;
-
-  img {
-    transition: transform .35s ease;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-  }
-
-  &:hover img {
-    transform: scale(1.06);
-  }
-}
-
-// ------------------------------------------------------------------
 // Footer
 // ------------------------------------------------------------------
 .site-footer {
   background-color: $brass-dark;
   color: rgba($brass-white, .8);
+
+  // Logo ist für hellen Untergrund gestaltet – braucht auf dem
+  // dunklen Footer einen hellen Hintergrund-Chip.
+  .footer-logo {
+    height: 7rem;
+    width: auto;
+    padding: .5rem;
+    background-color: $brass-white;
+    border-radius: $border-radius;
+  }
 
   a {
     color: $brass-white;

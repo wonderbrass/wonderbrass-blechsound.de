@@ -3,10 +3,13 @@ layout: home
 title: Home
 ---
 
-<section class="hero" style="background-image: url('{{ '/assets/img/hero-bg.jpg' | relative_url }}');">
+<section class="hero">
   <div class="hero-inner">
-    <p class="hero-eyebrow">Live &amp; unplugged</p>
-    <h1>{{ site.tagline }}</h1>
+    <h1 class="mb-0">
+      <span class="hero-logo" role="img" aria-label="{{ site.title }} – {{ site.tagline }}">
+        {% include_relative assets/brand/WB-Schriftzug.svg %}
+      </span>
+    </h1>
     <p class="lead col-lg-8 mx-auto">
       {{ site.description }}
     </p>
@@ -14,7 +17,7 @@ title: Home
       <a class="btn btn-primary btn-lg text-uppercase" href="{{ '/termine/' | relative_url }}">
         Termine ansehen
       </a>
-      <a class="btn btn-outline-light btn-lg text-uppercase" href="{{ '/kontakt/' | relative_url }}">
+      <a class="btn btn-outline-light btn-lg text-uppercase" href="mailto:{{ site.contact.email }}">
         Kontakt aufnehmen
       </a>
     </div>
@@ -36,13 +39,20 @@ title: Home
   <div class="container">
     <h2 class="section-title">Nächste Termine</h2>
     <div class="row g-4">
-      {% if site.data.termine %}
+      {% if site.data.termine.size > 0 %}
         {% for termin in site.data.termine limit:3 %}
           <div class="col-md-4">
             <div class="gig-card p-3 h-100 bg-white">
-              <p class="gig-date mb-1">{{ termin.datum }}</p>
+              <p class="gig-date mb-1">
+                {{ termin.wochentag_kurz }}, {{ termin.tag }}. {{ termin.monat_kurz }} {{ termin.jahr }}
+                {%- unless termin.zeit_unbekannt -%}
+                  {{ " " }}&middot; {{ termin.uhrzeit_start }}{% if termin.uhrzeit_ende and termin.uhrzeit_ende != termin.uhrzeit_start %}–{{ termin.uhrzeit_ende }}{% endif %} Uhr
+                {%- endunless %}
+              </p>
               <p class="fw-semibold mb-1">{{ termin.titel }}</p>
-              <p class="mb-0 text-muted">{{ termin.ort }}</p>
+              {% if termin.ort != "" %}
+                <p class="mb-0 text-muted">{{ termin.ort }}</p>
+              {% endif %}
             </div>
           </div>
         {% endfor %}

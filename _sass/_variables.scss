@@ -27,11 +27,11 @@ $theme-colors: (
 
 // ------------------------------------------------------------------
 // Typografie
-// Headline: Oswald – kräftig, kondensiert, wirkt wie Konzert-Plakate
+// Headline: Trajan Pro – Brand-Schrift (klassische römische Versalien)
 // Fließtext: Source Sans 3 – ruhig und gut lesbar
-// (Google Fonts werden in _includes/head.html eingebunden)
+// Beide Schriften werden lokal als Web-Fonts eingebunden, siehe _fonts.scss
 // ------------------------------------------------------------------
-$font-family-headline: "Oswald", "Arial Narrow", sans-serif;
+$font-family-headline: "Trajan Pro", "Times New Roman", serif;
 $font-family-sans-serif: "Source Sans 3", "Segoe UI", Roboto, sans-serif;
 $font-family-base: $font-family-sans-serif;
 
