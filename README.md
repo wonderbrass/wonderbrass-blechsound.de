@@ -1,9 +1,16 @@
 # Wonderbrass – Website
 
-Offizielle Website von Wonderbrass, umgesetzt mit **Jekyll** und
-**Bootstrap als Sass-Version**, gehostet auf **GitHub Pages**.
+[![Build & Deploy nach GitHub Pages](https://github.com/wonderbrass/wonderbrass-blechsound.de/actions/workflows/pages.yml/badge.svg)](https://github.com/wonderbrass/wonderbrass-blechsound.de/actions/workflows/pages.yml)
 
-## Farben
+Quellcode der offiziellen Website von [Wonderbrass](https://wonderbrass.github.io/wonderbrass-blechsound.de/) – Blechbläser-Combo mit Terminen, Bandmitgliedern, Sponsoren und Impressum.
+
+## Tech-Stack
+
+- [Jekyll](https://jekyllrb.com) 4.3 (Ruby, statischer Seitengenerator)
+- [Bootstrap](https://getbootstrap.com) 5 und [Font Awesome](https://fontawesome.com) 6 (Icons) als Ruby-Gems eingebunden (siehe [_plugins/](_plugins)), keine vendorten CSS-Dateien und kein CDN-Aufruf zu Drittanbietern
+- Kein eigenes JavaScript – nur das Bootstrap-JS-Bundle (Navigation/Collapse) ist eingebunden
+
+### Farben
 
 | Rolle       | Hex       | Verwendung                          |
 |-------------|-----------|--------------------------------------|
@@ -14,60 +21,28 @@ Offizielle Website von Wonderbrass, umgesetzt mit **Jekyll** und
 Definiert in `_sass/_variables.scss` – dort auch die Bootstrap-Farb-Map
 (`$theme-colors`), damit z.&nbsp;B. `btn-primary` automatisch in Gold erscheint.
 
-## Projektstruktur
+## Lokale Entwicklung
 
-```
-.
-├── _config.yml            # Grundeinstellungen, Bandkontakt, Social Links
-├── _data/
-│   ├── mitglieder.yml      # Bandmitglieder (Name, Instrument, optional Foto)
-│   ├── anlaesse.yml        # Anlässe auf der Seite "Über uns" (Name + Icon)
-│   ├── sponsoren.yml       # Sponsoren (Name, Logo, Website, optional "haupt")
-│   ├── termine.yml         # kommende Konzerttermine (wird beim Build
-│   │                        # automatisch von der Konzertmeister-API
-│   │                        # überschrieben)
-│   └── termine_vergangen.yml   # vergangene Termine des laufenden
-│                                # Kalenderjahres (dito automatisch)
-├── _includes/               # head, footer, sponsor-card
-├── _layouts/                 # default, home (Schriftzug-Hero + Klick auf Startseite)
-├── _plugins/
-│   └── bootstrap_sass_paths.rb   # bindet den Sass-Quellordner der Bootstrap-Gem ein
-├── _sass/
-│   ├── _variables.scss     # Bootstrap-Variablen VOR dem Import überschreiben
-│   └── _custom.scss        # eigene Komponenten (Hero, Karten, Footer, Sektionen)
-├── assets/
-│   ├── css/main.scss       # Sass-Einstiegspunkt → wird zu assets/css/main.css
-│   ├── js/main.js
-│   ├── brand/               # Logo, Schriftzug, Unterstreichung (SVG)
-│   ├── vendor/fontawesome/  # lokal gehostetes Font Awesome (Icons)
-│   └── img/                # eigene Bilder (Favicon, Sponsoren-Logos etc.)
-├── script/
-│   └── fetch_termine.rb    # holt Termine von der Konzertmeister-API
-├── index.html, ueber-uns.html, termine.html, sponsoren.html, impressum.html
-├── Gemfile
-└── .github/workflows/
-    ├── pages.yml            # Build & Deploy nach GitHub Pages
-    └── release.yml          # automatisches Release-Tagging
+Voraussetzung: Ruby >= 3.1 und Bundler.
+
+```bash
+bundle install             # Gems installieren
+bundle exec jekyll serve   # Dev-Server mit Live-Rebuild unter http://127.0.0.1:4000/wonderbrass-blechsound.de/
+bundle exec jekyll build   # Statische Seite nach _site/ bauen
 ```
 
-## GitHub-Actions-Workflows
+Es gibt keine Tests oder Linter in diesem Repo.
 
-GitHub Pages baut Jekyll-Seiten standardmäßig im **Safe Mode** mit dem
-`github-pages`-Gem und lässt dabei keine zusätzlichen Gems wie `bootstrap`
-oder eigene `_plugins` zu. Deshalb baut `.github/workflows/pages.yml` die
-Seite selbst per `bundle exec jekyll build` und lädt nur das fertige
-`_site`-Verzeichnis zu GitHub Pages hoch. Zusätzlich zum Push nach `main`
-baut der Workflow die Seite auch täglich per `schedule` neu, damit
-neue/geänderte Konzertmeister-Termine auch ohne Code-Änderung erscheinen.
+## Struktur
 
-**Einmalig im Repository einrichten:** Settings → Pages → *Build and
-deployment* → Source auf **„GitHub Actions"** stellen.
+- `index.html`, `ueber-uns.html`, `termine.html`, `sponsoren.html`, `impressum.html` – die Seiten der Website
+- `_layouts/`, `_includes/` – gemeinsames Seitengerüst (Header, Footer, Sponsor-Karte)
+- `_data/` – listenartiger Inhalt (Bandmitglieder, Anlässe, Sponsoren, Termine), wird per `{% for %}`-Schleife eingebunden
+- `_sass/`, `assets/css/main.scss` – Styling (Bootstrap + eigene Anpassungen)
+- `_config.yml` – Site-Einstellungen inkl. Bandkontakt (`contact.*`) und Theme-Color
+- `script/fetch_termine.rb` – holt die Konzerttermine von der Konzertmeister-API (siehe unten)
 
-`.github/workflows/release.yml` erstellt bei jedem Push nach `main`
-automatisch einen Git-Tag + GitHub-Release nach dem Schema
-`YYYY.MM.VERSION` (z.&nbsp;B. `2026.08.1`) – `VERSION` zählt pro
-Kalendermonat neu ab 1 hoch. Kein manuelles Einrichten nötig, läuft mit den
-Standard-Repository-Rechten (`contents: write`).
+Mehr Architektur-Details (inkl. einiger nicht offensichtlicher Stolperfallen) stehen in [CLAUDE.md](CLAUDE.md).
 
 ## Konzertmeister-API (Termine)
 
@@ -94,10 +69,10 @@ Repository-Secret** hinterlegen:
 Settings → Secrets and variables → Actions → *New repository secret* →
 Name `KONZERTMEISTER_API_KEY`, Wert der API-Key.
 
-Der Workflow (`.github/workflows/pages.yml`) reicht das Secret nur während
-des Build-Jobs als Umgebungsvariable an das Fetch-Script durch – der Key
-landet nie im ausgelieferten `_site`-Verzeichnis und ist für Website-
-Besucher:innen nicht einsehbar.
+Der Workflow ([`.github/workflows/pages.yml`](.github/workflows/pages.yml))
+reicht das Secret nur während des Build-Jobs als Umgebungsvariable an das
+Fetch-Script durch – der Key landet nie im ausgelieferten `_site`-Verzeichnis
+und ist für Website-Besucher:innen nicht einsehbar.
 
 **Lokal mit echten Daten arbeiten** (optional): Key nur für den einen
 Aufruf als Umgebungsvariable setzen, nicht dauerhaft exportieren:
@@ -109,3 +84,14 @@ KONZERTMEISTER_API_KEY="dein-key" bundle exec ruby script/fetch_termine.rb
 Ohne gesetzten Key bleiben die zuletzt im Repo vorhandenen
 `_data/termine*.yml` unverändert – lokales Entwickeln funktioniert also auch
 ohne Key.
+
+## Deployment
+
+Die Website liegt auf [GitHub Pages](https://pages.github.com) als Projektseite unter `https://wonderbrass.github.io/wonderbrass-blechsound.de/` (kein eigenes Domain-Setup).
+
+Workflow: Alle Änderungen laufen über den `develop`-Branch. Sobald `develop` nach `main` gemerged/gepusht wird, laufen automatisch zwei GitHub-Actions-Workflows:
+
+- [`.github/workflows/pages.yml`](.github/workflows/pages.yml) baut die Seite und deployed sie auf GitHub Pages. GitHub Pages' eigener Safe-Mode-Build erlaubt keine zusätzlichen Gems wie `bootstrap`/`font-awesome-sass` oder eigene `_plugins` – deshalb baut der Workflow die Seite selbst per `bundle exec jekyll build`. Er läuft zusätzlich täglich per `schedule`, damit neue/geänderte Konzertmeister-Termine auch ohne Code-Änderung erscheinen.
+- [`.github/workflows/release.yml`](.github/workflows/release.yml) erstellt automatisch ein neues [Release](https://github.com/wonderbrass/wonderbrass-blechsound.de/releases) nach dem Schema `YYYY.MM.VERSION` (z.&nbsp;B. `2026.08.1`).
+
+**Einmalig im Repository einrichten:** Settings → Pages → *Build and deployment* → Source auf **„GitHub Actions"** stellen.
