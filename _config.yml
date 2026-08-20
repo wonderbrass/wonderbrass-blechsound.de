@@ -27,6 +27,13 @@ social:
   youtube: "https://youtube.com/"
 
 # ----------------------------------------------------------------
+# Theme-Color (färbt u.a. die Adresszeile/Tab-Leiste unter iOS/macOS
+# Safari sowie den Splashscreen bei "Zum Home-Bildschirm"). Muss mit
+# $brass-gold in _sass/_variables.scss übereinstimmen.
+# ----------------------------------------------------------------
+theme_color: "#B0892D"
+
+# ----------------------------------------------------------------
 # Sass / Bootstrap
 # ----------------------------------------------------------------
 sass:

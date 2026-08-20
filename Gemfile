@@ -5,6 +5,11 @@ gem "jekyll", "~> 4.3"
 # Bootstrap als Sass-Version einbinden (Quelle: node_modules-freie Ruby-Gem)
 gem "bootstrap", "~> 5.3"
 
+# Font Awesome als Sass-Version einbinden (Icons), analog zu Bootstrap.
+# Bringt "sassc" als ungenutzte Laufzeit-Abhängigkeit mit (nur für den
+# Rails/Sprockets-Autoload-Pfad des Gems relevant, den wir nicht nutzen).
+gem "font-awesome-sass", "~> 6.7"
+
 # Jekyll benötigt für Sass-Kompilierung Dart-Sass
 gem "jekyll-sass-converter", "~> 3.0"
 
