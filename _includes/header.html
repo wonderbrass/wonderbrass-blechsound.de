@@ -1,14 +1,22 @@
 <header>
   <nav class="navbar navbar-dark navbar-expand-md fixed-top navbar-brasscombo">
     <div class="container">
-      <a class="navbar-brand" href="{{ '/' | relative_url }}" aria-label="{{ site.title }} – zur Startseite">
-        <img src="{{ '/assets/brand/WB-Logo-Light.svg' | relative_url }}" alt="{{ site.title }}" class="navbar-logo">
-      </a>
+      <div class="navbar-top-row">
+        <a class="navbar-brand" href="{{ '/' | relative_url }}" aria-label="{{ site.title }} – zur Startseite">
+          <picture>
+            <!-- Helles Systemschema: dunkles Logo passend zur hellen (Tertiärfarbe) Navbar -->
+            <source srcset="{{ '/assets/brand/WB-Logo-Dark.svg' | relative_url }}" media="(prefers-color-scheme: light)">
+            <img src="{{ '/assets/brand/WB-Logo-Light.svg' | relative_url }}" alt="{{ site.title }}" class="navbar-logo">
+          </picture>
+        </a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#hauptnavigation"
-              aria-controls="hauptnavigation" aria-expanded="false" aria-label="Navigation umschalten">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#hauptnavigation"
+                aria-controls="hauptnavigation" aria-expanded="false" aria-label="Navigation umschalten">
+          <span class="navbar-toggler-bar"></span>
+          <span class="navbar-toggler-bar"></span>
+          <span class="navbar-toggler-bar"></span>
+        </button>
+      </div>
 
       <div class="collapse navbar-collapse" id="hauptnavigation">
         <ul class="navbar-nav ms-auto mb-0">
