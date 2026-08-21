@@ -35,6 +35,11 @@ body {
   // Farben unten sowie das Logo selbst in header.html wechseln passend
   // mit).
   background-color: $brass-dark;
+  // Ohne Schatten gibt es sonst keine sichtbare Grenze zum Seiteninhalt,
+  // insbesondere im hellen Modus (Tertiärfarbe direkt über dem weißen
+  // Hero) – daher unabhängig vom Farbschema, in beiden Fällen dunkel
+  // getönt (Schatten wirken über Farbschemata hinweg dunkel).
+  box-shadow: 0 2px 8px rgba($brass-dark, .2);
 
   @media (prefers-color-scheme: light) {
     background-color: $brass-tertiary-bg;
