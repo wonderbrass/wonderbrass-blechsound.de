@@ -2,12 +2,14 @@
 <html lang="{{ site.lang | default: 'de' }}">
   {% include head.html %}
   <body>
-    <div class="safari-chrome-strip" aria-hidden="true"></div>
+    {% include header.html %}
 
     <main>
       {{ content }}
     </main>
 
     {% include footer.html %}
+
+    <script src="{{ '/assets/js/vendor/bootstrap.bundle.min.js' | relative_url }}"></script>
   </body>
 </html>

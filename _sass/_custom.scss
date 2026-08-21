@@ -6,23 +6,54 @@ p {
 }
 
 // ------------------------------------------------------------------
-// Safari-Toolbar-Einfärbung (iOS/macOS)
+// Website-Hintergrund
 // ------------------------------------------------------------------
-// Neuere Safari-Versionen tinten Adressleiste/Tab-Leiste offenbar nicht
-// (nur) anhand von <meta name="theme-color">, sondern anhand der
-// tatsächlichen Hintergrundfarbe eines fixierten, (fast) vollbreiten
-// Elements am oberen Seitenrand. Da wir keine fixierte Navigation mehr
-// haben, dient dieser 1px hohe, unsichtbare Streifen rein technisch als
-// Farb-Vorlage dafür – bewusst in der Sekundärfarbe (nicht Gold), damit
-// die Einfärbung beim Scrollen zum dunklen Footer optisch dazu passt.
-.safari-chrome-strip {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 1px;
+// Verhindert einen hellen Blitzer unterhalb des (dunklen) Footers beim
+// elastischen Überscrollen auf dem Smartphone – html/body sind i.d.R.
+// höher als der Content, der Bereich danach zeigt sonst die
+// Standard-Seitenfarbe (Weiß) statt der Footer-Farbe.
+html,
+body {
   background-color: $brass-dark;
-  pointer-events: none;
+}
+
+// ------------------------------------------------------------------
+// Navigation (fixed-top)
+// ------------------------------------------------------------------
+$navbar-brasscombo-height: 4.5rem;
+
+// Ausgleich für die fixed-top-Navbar, die sonst den Seiteninhalt
+// überdeckt (Navbar liegt per position:fixed außerhalb des Textflusses).
+body {
+  padding-top: $navbar-brasscombo-height;
+}
+
+.navbar-brasscombo {
+  min-height: $navbar-brasscombo-height;
+  background-color: $brass-dark;
+
+  .navbar-logo {
+    height: 2.75rem;
+    width: auto;
+  }
+
+  // Höhere Spezifität als Bootstraps ".navbar-dark .navbar-nav .nav-link"
+  // (gleiche Anzahl Klassen), damit die Nav-Links unsere Marken-Töne statt
+  // Bootstraps generisches Weiß bekommen. Hover/aktiv in Gold, analog zum
+  // bestehenden Verhalten der Footer-Links.
+  .navbar-nav .nav-link {
+    font-family: $font-family-headline;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    font-size: .95rem;
+    color: rgba($brass-white, .85);
+    padding: .5rem 1rem;
+
+    &:hover,
+    &.active {
+      color: $brass-gold;
+    }
+  }
 }
 
 // ------------------------------------------------------------------
