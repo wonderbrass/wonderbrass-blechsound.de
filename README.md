@@ -8,7 +8,7 @@ Quellcode der offiziellen Website von [Wonderbrass](https://wonderbrass.github.i
 
 - [Jekyll](https://jekyllrb.com) 4.3 (Ruby, statischer Seitengenerator)
 - [Bootstrap](https://getbootstrap.com) 5 und [Font Awesome](https://fontawesome.com) 6 (Icons) als Ruby-Gems eingebunden (siehe [_plugins/](_plugins)), keine vendorten CSS-Dateien und kein CDN-Aufruf zu Drittanbietern
-- Kein JavaScript – die Seite ist komplett statisches HTML/CSS
+- Bootstraps JS-Bundle (`assets/js/vendor/bootstrap.bundle.min.js`, manuell vendort passend zur Gem-Version) nur für die Collapse-Funktion des mobilen Navigations-Togglers – sonst kein eigenes JavaScript
 
 ### Farben
 
