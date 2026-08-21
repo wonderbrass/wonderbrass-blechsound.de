@@ -32,26 +32,37 @@ body {
   min-height: $navbar-brasscombo-height;
   background-color: $brass-dark;
 
-  .container {
-    position: relative;
-  }
-
   .navbar-logo {
     height: 2.75rem;
     width: auto;
   }
 
+  // Eigene, höhenfeste Zeile für Logo + Toggler – bewusst NICHT direkt im
+  // ".container", weil dessen Höhe beim Öffnen des Collapse-Menüs wächst
+  // (die Nav-Liste wird als zusätzliche Zeile mit reingerechnet). Mit
+  // ".container" als Bezugspunkt würde das absolut positionierte Logo beim
+  // Aufklappen mit nach unten wandern, weil "top" sich auf die dann
+  // größere Höhe bezieht. Hier bleibt die Zeile immer $navbar-brasscombo-
+  // height hoch, unabhängig vom Collapse-Zustand darunter.
+  .navbar-top-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: $navbar-brasscombo-height;
+  }
+
   // Unterhalb von "md" (Toggler-Ansicht) liegt zwischen Logo und Toggler
   // kein drittes Element, das die Mitte ausgleichen könnte – daher wird das
-  // Logo hier per position:absolute exakt mittig im Container platziert,
+  // Logo hier per position:absolute exakt mittig in der Zeile platziert,
   // unabhängig von der (unterschiedlich breiten) Toggler-Schaltfläche
   // daneben. Der Toggler bleibt normal im Textfluss und wandert per
   // margin-left:auto an den rechten Rand.
   @media (max-width: 767.98px) {
     .navbar-brand {
       position: absolute;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translate(-50%, -50%);
     }
 
     .navbar-toggler {
