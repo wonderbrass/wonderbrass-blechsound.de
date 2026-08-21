@@ -78,32 +78,36 @@ body {
       z-index: 1;
     }
 
+    // Eigenes 3-Balken-Icon statt Bootstraps statischem SVG-Hintergrundbild,
+    // damit es sich per CSS-Transition zum "X" drehen lässt. Bootstraps
+    // Collapse-JS pflegt "aria-expanded" am Toggler automatisch mit – daran
+    // hängt die Animation, kein eigenes JavaScript nötig.
+    //
+    // WICHTIG: display:flex gehört in dieses Media Query statt in eine
+    // eigene, unbedingte Regel – sonst hätte sie dieselbe Spezifität wie
+    // Bootstraps ".navbar-expand-md .navbar-toggler { display: none; }" und
+    // würde diese (weil in main.scss später importiert) dauerhaft
+    // überschreiben, wodurch der Toggler auch auf Desktop-Breite sichtbar
+    // bliebe.
     .navbar-toggler {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 30px;
+      height: 24px;
+      padding: 0;
+      border: 0;
+      background-color: transparent;
       margin-left: auto;
+      // Bootstraps Standard-Fokusring (box-shadow) bleibt bewusst erhalten –
+      // nur der permanente Rahmen ist weg, Tastatur-Fokus bleibt sichtbar.
     }
 
     .navbar-collapse {
       position: relative;
       z-index: 2;
     }
-  }
-
-  // Eigenes 3-Balken-Icon statt Bootstraps statischem SVG-Hintergrundbild,
-  // damit es sich per CSS-Transition zum "X" drehen lässt. Bootstraps
-  // Collapse-JS pflegt "aria-expanded" am Toggler automatisch mit – daran
-  // hängt die Animation, kein eigenes JavaScript nötig.
-  .navbar-toggler {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-    width: 30px;
-    height: 24px;
-    padding: 0;
-    border: 0;
-    background-color: transparent;
-    // Bootstraps Standard-Fokusring (box-shadow) bleibt bewusst erhalten –
-    // nur der permanente Rahmen ist weg, Tastatur-Fokus bleibt sichtbar.
   }
 
   .navbar-toggler-bar {
