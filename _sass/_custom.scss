@@ -32,9 +32,31 @@ body {
   min-height: $navbar-brasscombo-height;
   background-color: $brass-dark;
 
+  .container {
+    position: relative;
+  }
+
   .navbar-logo {
     height: 2.75rem;
     width: auto;
+  }
+
+  // Unterhalb von "md" (Toggler-Ansicht) liegt zwischen Logo und Toggler
+  // kein drittes Element, das die Mitte ausgleichen könnte – daher wird das
+  // Logo hier per position:absolute exakt mittig im Container platziert,
+  // unabhängig von der (unterschiedlich breiten) Toggler-Schaltfläche
+  // daneben. Der Toggler bleibt normal im Textfluss und wandert per
+  // margin-left:auto an den rechten Rand.
+  @media (max-width: 767.98px) {
+    .navbar-brand {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .navbar-toggler {
+      margin-left: auto;
+    }
   }
 
   // Höhere Spezifität als Bootstraps ".navbar-dark .navbar-nav .nav-link"
