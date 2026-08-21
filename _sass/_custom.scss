@@ -99,6 +99,7 @@ body {
     font-size: .95rem;
     color: rgba($brass-white, .85);
     padding: .5rem 1rem;
+    white-space: nowrap;
 
     &:hover,
     &.active {
