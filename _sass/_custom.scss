@@ -6,6 +6,18 @@ p {
 }
 
 // ------------------------------------------------------------------
+// Website-Hintergrund
+// ------------------------------------------------------------------
+// Verhindert einen hellen Blitzer unterhalb des (dunklen) Footers beim
+// elastischen Überscrollen auf dem Smartphone – html/body sind i.d.R.
+// höher als der Content, der Bereich danach zeigt sonst die
+// Standard-Seitenfarbe (Weiß) statt der Footer-Farbe.
+html,
+body {
+  background-color: $brass-dark;
+}
+
+// ------------------------------------------------------------------
 // Navigation (fixed-top)
 // ------------------------------------------------------------------
 $navbar-brasscombo-height: 4.5rem;
@@ -18,27 +30,28 @@ body {
 
 .navbar-brasscombo {
   min-height: $navbar-brasscombo-height;
-  background-color: $brass-gold;
+  background-color: $brass-dark;
 
   .navbar-logo {
     height: 2.75rem;
     width: auto;
   }
 
-  // Höhere Spezifität als Bootstraps ".navbar-light .navbar-nav .nav-link"
-  // (gleiche Anzahl Klassen), damit unsere Gold-Navbar dunklen statt
-  // Gold-auf-Gold-Text bekommt.
+  // Höhere Spezifität als Bootstraps ".navbar-dark .navbar-nav .nav-link"
+  // (gleiche Anzahl Klassen), damit die Nav-Links unsere Marken-Töne statt
+  // Bootstraps generisches Weiß bekommen. Hover/aktiv in Gold, analog zum
+  // bestehenden Verhalten der Footer-Links.
   .navbar-nav .nav-link {
     font-family: $font-family-headline;
     text-transform: uppercase;
     letter-spacing: .04em;
     font-size: .95rem;
-    color: rgba($brass-dark, .8);
+    color: rgba($brass-white, .85);
     padding: .5rem 1rem;
 
     &:hover,
     &.active {
-      color: $brass-dark;
+      color: $brass-gold;
     }
   }
 }
