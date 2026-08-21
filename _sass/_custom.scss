@@ -49,6 +49,12 @@ body {
     display: flex;
     align-items: center;
     min-height: $navbar-brasscombo-height;
+    // Ohne explizite Breite schrumpft die Zeile auf ihr einziges noch im
+    // Textfluss verbliebenes Kind (den Toggler), weil das Logo per
+    // position:absolute aus dem Fluss genommen ist – das Logo würde sich
+    // dann relativ zu dieser winzigen Box statt zur vollen Navbar-Breite
+    // zentrieren.
+    width: 100%;
   }
 
   // Unterhalb von "md" (Toggler-Ansicht) liegt zwischen Logo und Toggler
