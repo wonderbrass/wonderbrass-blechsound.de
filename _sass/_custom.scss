@@ -30,7 +30,15 @@ body {
 
 .navbar-brasscombo {
   min-height: $navbar-brasscombo-height;
+  // Dunkelmodus/Standard bleibt wie bisher; bei explizit hellem
+  // Systemmodus Tertiärfarbe statt Dunkel als Füllfarbe (Logo/Nav-Link-
+  // Farben unten sowie das Logo selbst in header.html wechseln passend
+  // mit).
   background-color: $brass-dark;
+
+  @media (prefers-color-scheme: light) {
+    background-color: $brass-tertiary-bg;
+  }
 
   .navbar-logo {
     height: 2.75rem;
@@ -117,6 +125,10 @@ body {
     background-color: $brass-white;
     border-radius: 1px;
     transition: transform .25s ease, opacity .25s ease;
+
+    @media (prefers-color-scheme: light) {
+      background-color: $brass-dark;
+    }
   }
 
   .navbar-toggler[aria-expanded="true"] .navbar-toggler-bar {
@@ -145,6 +157,10 @@ body {
     color: rgba($brass-white, .85);
     padding: .5rem 1rem;
     white-space: nowrap;
+
+    @media (prefers-color-scheme: light) {
+      color: rgba($brass-dark, .8);
+    }
 
     &:hover,
     &.active {
