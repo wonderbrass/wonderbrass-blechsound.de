@@ -36,7 +36,3 @@ Note: `_config.yml` sets `baseurl: "/wonderbrass-blechsound.de"`, so when runnin
 **GitHub Pages deploy is NOT the default Jekyll safe-mode build.** GitHub Pages' built-in build (via the `github-pages` gem) doesn't allow the `bootstrap` gem or custom `_plugins`, which this site needs. `.github/workflows/pages.yml` therefore builds the site itself (`bundle exec jekyll build`) and uploads only the resulting `_site/` artifact to Pages. This workflow also runs on a daily `schedule` (05:00 UTC) in addition to push-to-`main`, purely so newly added/changed Konzertmeister appointments show up without a code change. Repo setting required once: Settings → Pages → Build and deployment → Source = "GitHub Actions".
 
 **Releases are automatic**: `.github/workflows/release.yml` tags every push to `main` as `YYYY.MM.N` (N resets to 1 each calendar month) and creates a GitHub Release with auto-generated notes. No manual versioning needed.
-
-## Options
-- write all comments and filenames in german
-- do a commit after every change to keep track of everything
