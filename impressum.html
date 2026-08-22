@@ -25,7 +25,7 @@ E-Mail: <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>
 {% for abschnitt in site.data.impressum.abschnitte %}
 <h3>{{ abschnitt.titel }}</h3>
 
-<p>{{ abschnitt.text }}</p>
+{{ abschnitt.text | markdownify }}
 {% endfor %}
 
 </div>

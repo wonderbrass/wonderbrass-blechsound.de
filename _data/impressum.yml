@@ -43,7 +43,7 @@ abschnitte:
       entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen
       werden wir derartige Inhalte umgehend entfernen.
 
-  - titel: "Hosting bei GitHub Pages"
+  - titel: "Hosting"
     text: >-
       Diese Website ist eine rein statische Seite ohne eigenen Server und
       wird über GitHub Pages gehostet, einen Dienst der GitHub, Inc., 88
@@ -53,8 +53,8 @@ abschnitte:
       technisch notwendige Daten wie Ihre IP-Adresse, um die Inhalte an
       Ihren Browser auszuliefern; eine Auswertung dieser Daten durch uns
       findet nicht statt. Details zur Verarbeitung durch GitHub entnehmen
-      Sie der Datenschutzerklärung von GitHub unter
-      https://docs.github.com/site-policy/privacy-policies/github-privacy-statement.
+      Sie der [Datenschutzerklärung von
+      GitHub](https://docs.github.com/site-policy/privacy-policies/github-privacy-statement).
 
   - titel: "Datenschutz"
     text: >-
