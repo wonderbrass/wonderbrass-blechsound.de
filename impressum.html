@@ -8,19 +8,30 @@ title: Impressum & Datenschutz
 
 <h2>Angaben gemäß § 5 TMG:</h2>
 
-<address>
-{{ site.contact.organisation }}<br>
-{{ site.contact.address_line1 }}<br>
-{{ site.contact.address_line2 }}<br>
-E-Mail: <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>
-</address>
-
-<p>
-<strong>Vertreten durch:</strong><br>
-{{ site.contact.owner }}<br>
-<strong>Verantwortlich für die Webgestaltung:</strong><br>
-{{ site.contact.admin }}
-</p>
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="gig-card p-3 h-100">
+      <address class="mb-0">
+        {{ site.contact.organisation }}<br>
+        {{ site.contact.address_line1 }}<br>
+        {{ site.contact.address_line2 }}<br>
+        E-Mail: <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>
+      </address>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="gig-card p-3 h-100">
+      <p class="mb-2">
+        <strong>Vertreten durch:</strong><br>
+        {{ site.contact.owner }}
+      </p>
+      <p class="mb-0">
+        <strong>Verantwortlich für die Webgestaltung:</strong><br>
+        {{ site.contact.admin }}
+      </p>
+    </div>
+  </div>
+</div>
 
 {% for abschnitt in site.data.impressum.abschnitte %}
 <h3>{{ abschnitt.titel }}</h3>
