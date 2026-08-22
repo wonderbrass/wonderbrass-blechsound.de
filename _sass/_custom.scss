@@ -560,6 +560,16 @@ body {
     margin-right: .5rem;
     text-decoration: none;
 
+    // Unterhalb "md" (Touch-Bedienung) auf die von Apple/Google empfohlene
+    // Mindestgröße für Tipp-Ziele (~44px) vergrößern – 2.25rem (36px) ist am
+    // Finger schwer zu treffen.
+    @media (max-width: 767.98px) {
+      width: 2.75rem;
+      height: 2.75rem;
+      font-size: 1.15rem;
+      margin-right: .75rem;
+    }
+
     &:hover {
       border-color: $brass-gold;
       background-color: $brass-gold;
