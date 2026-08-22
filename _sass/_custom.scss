@@ -343,22 +343,45 @@ body {
   // Kartentitel für Gig-Cards außerhalb des Termine-Kontexts (z.B. Impressum),
   // wo statt eines Datums ein Name/Label die Karte einleitet. Wie Bootstraps
   // ".card-header" eine eigene, vom Karteninhalt (".gig-card-body") optisch
-  // abgesetzte Kappe: eigener Hintergrund + Trennlinie statt nur Text im
-  // selben Padding-Block.
+  // abgesetzte Kappe: dunkler Markenhintergrund + goldene Schrift/Trennlinie
+  // statt nur Text im selben Padding-Block.
   .gig-card-heading {
     margin: 0;
     padding: .6rem 1rem;
-    background-color: $brass-tertiary-bg;
-    border-bottom: 1px solid $brass-grey;
+    background-color: $brass-dark;
+    color: $brass-gold;
+    text-align: center;
+    border-bottom: 2px solid $brass-gold;
     font-family: $font-family-headline;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: .02em;
     font-size: 1.05rem;
+
+    i {
+      margin-right: .4rem;
+    }
   }
 
   .gig-card-body {
     padding: 1rem;
+  }
+
+  // Karten mit Header (Impressum-Kontaktkarten): Header behält seine
+  // natürliche Höhe, der Body füllt den Rest der (per "h-100" angeglichenen)
+  // Kartenhöhe und zentriert seinen Inhalt darin - horizontal wie vertikal.
+  &:has(> .gig-card-heading) {
+    display: flex;
+    flex-direction: column;
+
+    .gig-card-body {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
   }
 
   // Hervorgehobene Karte für den nächsten anstehenden Termin. Bewusst hell
