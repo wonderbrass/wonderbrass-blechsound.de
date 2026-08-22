@@ -329,12 +329,59 @@ body {
   border-left: 4px solid $brass-gold;
   border-radius: $border-radius;
   box-shadow: 0 .25rem .75rem rgba($brass-dark, .06);
+  // Damit die eckige .gig-card-heading-Kappe die abgerundeten Kartenecken
+  // oben nicht überragt (analog zu Bootstraps eigenem .card/.card-header).
+  overflow: hidden;
 
   .gig-date {
     font-family: $font-family-headline;
     color: $brass-gold;
     font-weight: 600;
     text-transform: uppercase;
+  }
+
+  // Kartentitel für Gig-Cards außerhalb des Termine-Kontexts (z.B. Impressum),
+  // wo statt eines Datums ein Name/Label die Karte einleitet. Wie Bootstraps
+  // ".card-header" eine eigene, vom Karteninhalt (".gig-card-body") optisch
+  // abgesetzte Kappe: heller Markenhintergrund + goldene Schrift/Trennlinie
+  // statt nur Text im selben Padding-Block.
+  .gig-card-heading {
+    margin: 0;
+    padding: .6rem 1rem;
+    background-color: $brass-tertiary-bg;
+    color: $brass-gold;
+    text-align: center;
+    border-bottom: 2px solid $brass-gold;
+    font-family: $font-family-base;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    font-size: 1.05rem;
+
+    i {
+      margin-right: .4rem;
+    }
+  }
+
+  .gig-card-body {
+    padding: 1rem;
+  }
+
+  // Karten mit Header (Impressum-Kontaktkarten): Header behält seine
+  // natürliche Höhe, der Body füllt den Rest der (per "h-100" angeglichenen)
+  // Kartenhöhe und zentriert seinen Inhalt darin - horizontal wie vertikal.
+  &:has(> .gig-card-heading) {
+    display: flex;
+    flex-direction: column;
+
+    .gig-card-body {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
   }
 
   // Hervorgehobene Karte für den nächsten anstehenden Termin. Bewusst hell
@@ -506,12 +553,23 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 1.15rem;
     border: 1px solid rgba($brass-white, .3);
     border-radius: 50%;
     margin-right: .5rem;
     text-decoration: none;
+
+    // Unterhalb "md" (Touch-Bedienung) deutlich über die von Apple/Google
+    // empfohlene Mindestgröße für Tipp-Ziele (~44px) vergrößern – 2.25rem
+    // (36px) ist am Finger schwer zu treffen.
+    @media (max-width: 767.98px) {
+      width: 3.5rem;
+      height: 3.5rem;
+      font-size: 1.5rem;
+      margin-right: 1rem;
+    }
 
     &:hover {
       border-color: $brass-gold;
