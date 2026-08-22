@@ -343,16 +343,16 @@ body {
   // Kartentitel für Gig-Cards außerhalb des Termine-Kontexts (z.B. Impressum),
   // wo statt eines Datums ein Name/Label die Karte einleitet. Wie Bootstraps
   // ".card-header" eine eigene, vom Karteninhalt (".gig-card-body") optisch
-  // abgesetzte Kappe: dunkler Markenhintergrund + goldene Schrift/Trennlinie
+  // abgesetzte Kappe: heller Markenhintergrund + goldene Schrift/Trennlinie
   // statt nur Text im selben Padding-Block.
   .gig-card-heading {
     margin: 0;
     padding: .6rem 1rem;
-    background-color: $brass-dark;
+    background-color: $brass-tertiary-bg;
     color: $brass-gold;
     text-align: center;
     border-bottom: 2px solid $brass-gold;
-    font-family: $font-family-headline;
+    font-family: $font-family-base;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: .02em;
