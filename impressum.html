@@ -10,25 +10,31 @@ title: Impressum & Datenschutz
 
 <div class="row g-4">
   <div class="col-md-6 col-lg-4">
-    <div class="gig-card p-3 h-100">
-      <p class="gig-card-heading mb-2">{{ site.contact.organisation }}</p>
-      <address class="mb-0">
-        {{ site.contact.address_line1 }}<br>
-        {{ site.contact.address_line2 }}<br>
-        E-Mail: <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>
-      </address>
+    <div class="gig-card h-100">
+      <p class="gig-card-heading">{{ site.contact.organisation }}</p>
+      <div class="gig-card-body">
+        <address class="mb-0">
+          {{ site.contact.address_line1 }}<br>
+          {{ site.contact.address_line2 }}<br>
+          E-Mail: <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>
+        </address>
+      </div>
     </div>
   </div>
   <div class="col-md-6 col-lg-4">
-    <div class="gig-card p-3 h-100">
-      <p class="gig-card-heading mb-2">Vertreten durch</p>
-      <p class="mb-0">{{ site.contact.owner }}</p>
+    <div class="gig-card h-100">
+      <p class="gig-card-heading">Vertreten durch</p>
+      <div class="gig-card-body">
+        <p class="mb-0">{{ site.contact.owner }}</p>
+      </div>
     </div>
   </div>
   <div class="col-md-6 col-lg-4">
-    <div class="gig-card p-3 h-100">
-      <p class="gig-card-heading mb-2">Verantwortlich für die Webgestaltung</p>
-      <p class="mb-0">{{ site.contact.admin }}</p>
+    <div class="gig-card h-100">
+      <p class="gig-card-heading">Webgestaltung</p>
+      <div class="gig-card-body">
+        <p class="mb-0">{{ site.contact.admin }}</p>
+      </div>
     </div>
   </div>
 </div>

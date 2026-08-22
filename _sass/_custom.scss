@@ -329,6 +329,9 @@ body {
   border-left: 4px solid $brass-gold;
   border-radius: $border-radius;
   box-shadow: 0 .25rem .75rem rgba($brass-dark, .06);
+  // Damit die eckige .gig-card-heading-Kappe die abgerundeten Kartenecken
+  // oben nicht überragt (analog zu Bootstraps eigenem .card/.card-header).
+  overflow: hidden;
 
   .gig-date {
     font-family: $font-family-headline;
@@ -338,13 +341,24 @@ body {
   }
 
   // Kartentitel für Gig-Cards außerhalb des Termine-Kontexts (z.B. Impressum),
-  // wo statt eines Datums ein Name/Label die Karte einleitet.
+  // wo statt eines Datums ein Name/Label die Karte einleitet. Wie Bootstraps
+  // ".card-header" eine eigene, vom Karteninhalt (".gig-card-body") optisch
+  // abgesetzte Kappe: eigener Hintergrund + Trennlinie statt nur Text im
+  // selben Padding-Block.
   .gig-card-heading {
+    margin: 0;
+    padding: .6rem 1rem;
+    background-color: $brass-tertiary-bg;
+    border-bottom: 1px solid $brass-grey;
     font-family: $font-family-headline;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: .02em;
     font-size: 1.05rem;
+  }
+
+  .gig-card-body {
+    padding: 1rem;
   }
 
   // Hervorgehobene Karte für den nächsten anstehenden Termin. Bewusst hell
