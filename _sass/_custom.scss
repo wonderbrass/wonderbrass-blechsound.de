@@ -337,6 +337,16 @@ body {
     text-transform: uppercase;
   }
 
+  // Kartentitel für Gig-Cards außerhalb des Termine-Kontexts (z.B. Impressum),
+  // wo statt eines Datums ein Name/Label die Karte einleitet.
+  .gig-card-heading {
+    font-family: $font-family-headline;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    font-size: 1.05rem;
+  }
+
   // Hervorgehobene Karte für den nächsten anstehenden Termin. Bewusst hell
   // gehalten (nicht die dunkle Kartenfarbe), da diese Karte in der Regel auf
   // dem dunklen "Nächster Auftritt"-Abschnitt liegt und sonst dunkel auf

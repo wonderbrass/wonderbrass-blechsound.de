@@ -9,26 +9,26 @@ title: Impressum & Datenschutz
 <h2>Angaben gemäß § 5 TMG:</h2>
 
 <div class="row g-4">
-  <div class="col-md-6">
+  <div class="col-md-6 col-lg-4">
     <div class="gig-card p-3 h-100">
+      <p class="gig-card-heading mb-2">{{ site.contact.organisation }}</p>
       <address class="mb-0">
-        {{ site.contact.organisation }}<br>
         {{ site.contact.address_line1 }}<br>
         {{ site.contact.address_line2 }}<br>
         E-Mail: <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>
       </address>
     </div>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-6 col-lg-4">
     <div class="gig-card p-3 h-100">
-      <p class="mb-2">
-        <strong>Vertreten durch:</strong><br>
-        {{ site.contact.owner }}
-      </p>
-      <p class="mb-0">
-        <strong>Verantwortlich für die Webgestaltung:</strong><br>
-        {{ site.contact.admin }}
-      </p>
+      <p class="gig-card-heading mb-2">Vertreten durch</p>
+      <p class="mb-0">{{ site.contact.owner }}</p>
+    </div>
+  </div>
+  <div class="col-md-6 col-lg-4">
+    <div class="gig-card p-3 h-100">
+      <p class="gig-card-heading mb-2">Verantwortlich für die Webgestaltung</p>
+      <p class="mb-0">{{ site.contact.admin }}</p>
     </div>
   </div>
 </div>
