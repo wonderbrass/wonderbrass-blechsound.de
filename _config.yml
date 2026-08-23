@@ -6,9 +6,10 @@ tagline: "Blechsound Pur"
 lang: de
 
 # Wird u.a. für kanonische URLs / Sitemap / RSS benötigt.
-# Für GitHub Pages im Schema https://<user>.github.io/<repo>
-url: "https://wonderbrass.github.io"
-baseurl: "/wonderbrass-blechsound.de"
+# Eigene Domain (siehe CNAME-Datei im Repo-Root) – wird direkt an der
+# Root ausgeliefert, daher kein baseurl-Präfix mehr nötig.
+url: "https://wonderbrass-blechsound.de"
+baseurl: ""
 
 # ----------------------------------------------------------------
 # Bandkontakt (im Footer & auf der Startseite genutzt)
