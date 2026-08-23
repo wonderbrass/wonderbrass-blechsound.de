@@ -21,7 +21,7 @@ KONZERTMEISTER_API_KEY="..." bundle exec ruby script/fetch_termine.rb   # refres
 
 There is no test suite or linter configured for this repo.
 
-Note: `_config.yml` sets `baseurl: "/wonderbrass-blechsound.de"`, so when running `jekyll serve` locally the site is served under `http://localhost:4000/wonderbrass-blechsound.de/`, not the bare root.
+Note: the site is deployed under the custom domain `wonderbrass-blechsound.de` (see `CNAME` in the repo root), so `_config.yml` sets `baseurl: ""` — `jekyll serve` serves locally at the bare root `http://localhost:4000/`.
 
 ### Fetching Konzertmeister termine locally
 
