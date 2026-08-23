@@ -1,3 +1,6 @@
+---
+layout: null
+---
 {
   "name": "Wonderbrass",
   "short_name": "Wonderbrass",
@@ -13,7 +16,7 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#B0892D",
+  "theme_color": "{{ site.theme_color }}",
   "background_color": "#252525",
   "display": "standalone"
 }

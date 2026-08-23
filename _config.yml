@@ -31,9 +31,11 @@ social:
 # ----------------------------------------------------------------
 # Theme-Color (färbt u.a. die Adresszeile/Tab-Leiste unter iOS/macOS
 # Safari sowie den Splashscreen bei "Zum Home-Bildschirm"). Muss mit
-# $brass-gold in _sass/_variables.scss übereinstimmen.
+# der Navbar-Hintergrundfarbe (.navbar-brasscombo, $brass-dark in
+# _sass/_variables.scss) übereinstimmen, sonst gibt es z.B. unter
+# Android einen sichtbaren Farbbruch zwischen Toolbar und Navbar.
 # ----------------------------------------------------------------
-theme_color: "#B0892D"
+theme_color: "#252525"
 
 # ----------------------------------------------------------------
 # Sass / Bootstrap
