@@ -16,9 +16,15 @@ bundle install                       # Gems installieren (erstes Mal oder nach �
 bundle exec jekyll serve             # lokaler Server mit Live-Reload, http://localhost:4000
 bundle exec jekyll build             # Produktions-Build nach _site/
 KONZERTMEISTER_API_KEY="..." bundle exec ruby script/fetch_termine.rb   # _data/termine*.yml mit echten Daten füllen
+bundle exec rake                     # Testsuite (minitest, test/)
 ```
 
-Keine Tests und kein Linter.
+Kein Linter. Die Tests laden `script/fetch_termine.rb` per `require_relative` (der Hauptteil läuft nur beim direkten
+Aufruf) und bauen die Seite über `SiteBuild.build` in `test/test_helper.rb` mit der Jekyll-API in temporäre Ordner.
+Dabei lassen sich Daten (`termine`, `termine_vergangen`) ersetzen, so hängen die Tests weder von der
+Konzertmeister-API noch vom Inhalt der lokalen `_data/termine*.yml` ab. Bekannte Fehler stehen als `skip` mit
+Issue-Nummer in den Tests und werden mit der Behebung wieder aktiviert. Neue Datendateien, Includes oder Felder
+brauchen einen Test in `test/data_test.rb` oder `test/site_test.rb`.
 
 ### Termine aus Konzertmeister lokal holen
 
@@ -52,6 +58,7 @@ Ohne Schlüssel endet das Skript mit Code 0 und lässt `_data/termine.yml` unver
 
 **Der Deploy auf GitHub Pages ist nicht der Standard-Build von Jekyll im Safe Mode.** Der eingebaute Build von GitHub Pages (Gem `github-pages`) erlaubt weder das Gem `bootstrap` noch eigene `_plugins`, die diese Seite braucht. `.github/workflows/pages.yml` baut die Seite deshalb selbst (`bundle exec jekyll build`) und lädt nur das Ergebnis `_site/` zu Pages hoch. Der Workflow läuft zusätzlich zum Push auf `main` täglich um 05:00 UTC, damit neue oder geänderte Termine aus Konzertmeister ohne Code-Änderung erscheinen. Einmalig nötige Einstellung: Settings → Pages → Build and deployment → Source = „GitHub Actions“.
 
+- **`.forgejo/workflows/test.yml`**: bei jedem Pull Request und jedem Push auf `develop` die Testsuite (`bundle exec rake`) in `ruby:3.4.7-bookworm`.
 - **`.forgejo/workflows/release.yml`**: bei jedem Push auf `main` (außer Commits mit `[skip ci]`) Tag und Forgejo-Release im Schema `YYYY.MM.N`. Die Release-Notes entstehen aus dem Commit-Log seit dem letzten Tag.
 - **`.forgejo/workflows/heartbeat.yml`**: monatlicher Commit nach `main`, siehe Abweichungen.
 
