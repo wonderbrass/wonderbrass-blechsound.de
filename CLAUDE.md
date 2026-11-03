@@ -28,13 +28,13 @@ brauchen einen Test in `test/data_test.rb` oder `test/site_test.rb`.
 
 ### Termine aus Konzertmeister lokal holen
 
-`_data/termine.yml` erzeugt die CI vor jedem Build neu (siehe unten) und soll eigentlich in der `.gitignore` stehen, damit echte Daten lokal gefahrlos geholt werden können. **Achtung:** Derzeit sind `_data/termine.yml` und `_data/termine_vergangen.yml` noch versioniert (Überbleibsel aus der Zeit vor den Ignore-Regeln, dazu ein Tippfehler in `.gitignore`: `termine-vergangen.yml` statt `termine_vergangen.yml`). Lokale Änderungen daran also nicht als wegwerfbar ansehen, bis das bereinigt ist.
+`_data/termine.yml` und `_data/termine_vergangen.yml` erzeugt die CI vor jedem Build neu (siehe unten). Beide stehen in der `.gitignore` und werden nie committet, echte Daten lassen sich lokal also gefahrlos für Designarbeit holen:
 
 ```bash
 KONZERTMEISTER_API_KEY="dein-key" bundle exec ruby script/fetch_termine.rb
 ```
 
-Ohne Schlüssel endet das Skript mit Code 0 und lässt `_data/termine.yml` unverändert (oder fehlend bei einem frischen Klon). Lokale Builds funktionieren trotzdem, das Include zeigt dann „keine Termine“.
+Ohne Schlüssel endet das Skript mit Code 0 und lässt `_data/termine*.yml` unverändert (oder fehlend bei einem frischen Klon). Lokale Builds funktionieren trotzdem, `termine.html` zeigt dann „keine Termine“.
 
 `.env.example` dokumentiert die erwartete Variable (`KONZERTMEISTER_API_KEY=`). Kopieren nach `.env` und echten Schlüssel eintragen, beide Dateien stehen in der `.gitignore`. Nichts im Repo lädt `.env` automatisch (kein `dotenv`-Gem), die Variable vor dem Skript selbst exportieren.
 
