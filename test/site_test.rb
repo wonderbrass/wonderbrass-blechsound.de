@@ -9,7 +9,8 @@ require "test_helper"
 
 class SiteTest < Minitest::Test
   # Files of the repository that must never end up on the website
-  INTERNAL_FILES = %w[Gemfile Gemfile.lock README.md Rakefile test .env .env.example .github .forgejo].freeze
+  INTERNAL_FILES = %w[CLAUDE.md Gemfile Gemfile.lock README.md Rakefile script test .env .env.example .github .forgejo]
+                   .freeze
 
   def past_appointments
     [to_termin(appointments[0].merge("name" => "Frühjahrskonzert", "start" => "2026-04-25T17:00:00Z", "end" => nil))]
@@ -44,12 +45,6 @@ class SiteTest < Minitest::Test
   def test_repository_files_are_not_published
     published = INTERNAL_FILES.select { |file| File.exist?(File.join(site, file)) }
     assert_empty published
-  end
-
-  def test_claude_md_and_the_script_are_not_published
-    skip "CLAUDE.md und script/ werden veröffentlicht, Issue #4"
-    refute File.exist?(File.join(site, "CLAUDE.md"))
-    refute File.exist?(File.join(site, "script"))
   end
 
   def test_every_page_has_a_title
