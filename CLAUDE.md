@@ -52,8 +52,11 @@ Ohne Schlüssel endet das Skript mit Code 0 und lässt `_data/termine.yml` unver
 
 **Der Deploy auf GitHub Pages ist nicht der Standard-Build von Jekyll im Safe Mode.** Der eingebaute Build von GitHub Pages (Gem `github-pages`) erlaubt weder das Gem `bootstrap` noch eigene `_plugins`, die diese Seite braucht. `.github/workflows/pages.yml` baut die Seite deshalb selbst (`bundle exec jekyll build`) und lädt nur das Ergebnis `_site/` zu Pages hoch. Der Workflow läuft zusätzlich zum Push auf `main` täglich um 05:00 UTC, damit neue oder geänderte Termine aus Konzertmeister ohne Code-Änderung erscheinen. Einmalig nötige Einstellung: Settings → Pages → Build and deployment → Source = „GitHub Actions“.
 
-`.github/workflows/release.yml` erzeugt bei jedem Push auf `main` Tag und Release im Schema `YYYY.MM.N` mit automatisch erzeugten Notes.
+- **`.forgejo/workflows/release.yml`**: bei jedem Push auf `main` (außer Commits mit `[skip ci]`) Tag und Forgejo-Release im Schema `YYYY.MM.N`. Die Release-Notes entstehen aus dem Commit-Log seit dem letzten Tag.
+- **`.forgejo/workflows/heartbeat.yml`**: monatlicher Commit nach `main`, siehe Abweichungen.
+
+Forgejo spiegelt das Repo per Push-Mirror nach GitHub, dort laufen nur noch die Pages-Workflows.
 
 ## Abweichungen von den Konventionen
 
-Keine.
+- Der Workflow `heartbeat` committet am 1. jedes Monats direkt nach `main` (Commit mit `[skip ci]`, löst kein Release aus). Sonst schaltet GitHub die geplanten Pages-Deploys nach 60 Tagen ohne Aktivität ab. `main` läuft dadurch vor `develop`. Das ist unkritisch, weil `develop` die Datei `.heartbeat` nie ändert, ein Merge von `develop` nach `main` bleibt also konfliktfrei.
