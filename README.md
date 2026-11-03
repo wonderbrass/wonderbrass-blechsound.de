@@ -2,7 +2,7 @@
 
 [![Build & Deploy nach GitHub Pages](https://github.com/wonderbrass/wonderbrass-blechsound.de/actions/workflows/pages.yml/badge.svg)](https://github.com/wonderbrass/wonderbrass-blechsound.de/actions/workflows/pages.yml)
 
-Quellcode der offiziellen Website von [Wonderbrass](https://wonderbrass.github.io/wonderbrass-blechsound.de/) – Blechbläser-Combo mit Terminen, Bandmitgliedern, Sponsoren und Impressum.
+Quellcode der offiziellen Website von [Wonderbrass](https://wonderbrass-blechsound.de/) – Blechbläser-Combo mit Terminen, Bandmitgliedern, Sponsoren und Impressum.
 
 ## Tech-Stack
 
@@ -27,11 +27,17 @@ Voraussetzung: Ruby >= 3.1 und Bundler.
 
 ```bash
 bundle install             # Gems installieren
-bundle exec jekyll serve   # Dev-Server mit Live-Rebuild unter http://127.0.0.1:4000/wonderbrass-blechsound.de/
+bundle exec jekyll serve   # Dev-Server mit Live-Rebuild unter http://127.0.0.1:4000/
 bundle exec jekyll build   # Statische Seite nach _site/ bauen
+bundle exec rake           # Testsuite
 ```
 
-Es gibt keine Tests oder Linter in diesem Repo.
+Die Tests in `test/` (minitest) prüfen das Konzertmeister-Skript, die Daten in `_data/` und die gebaute Seite:
+Links, Bilder und Skripte über [html-proofer](https://github.com/gjtorikian/html-proofer), die Terminseite mit
+Beispielterminen aus `test/fixtures/` und die Seiten, die aus den Daten entstehen. Sie bauen die Seite in einen
+temporären Ordner und brauchen weder Netz noch API-Schlüssel. Der Workflow
+[`test.yml`](.forgejo/workflows/test.yml) führt sie bei jedem Pull Request und jedem Push auf `develop` aus.
+Einen Linter gibt es nicht.
 
 ## Struktur
 
@@ -41,6 +47,7 @@ Es gibt keine Tests oder Linter in diesem Repo.
 - `_sass/`, `assets/css/main.scss` – Styling (Bootstrap + eigene Anpassungen)
 - `_config.yml` – Site-Einstellungen inkl. Bandkontakt (`contact.*`) und Theme-Color
 - `script/fetch_termine.rb` – holt die Konzerttermine von der Konzertmeister-API (siehe unten)
+- `test/`, `Rakefile` – Testsuite (`bundle exec rake`)
 
 Mehr Architektur-Details (inkl. einiger nicht offensichtlicher Stolperfallen) stehen in [CLAUDE.md](CLAUDE.md).
 
@@ -87,11 +94,11 @@ ohne Key.
 
 ## Deployment
 
-Die Website liegt auf [GitHub Pages](https://pages.github.com) als Projektseite unter `https://wonderbrass.github.io/wonderbrass-blechsound.de/` (kein eigenes Domain-Setup).
+Die Website liegt auf [GitHub Pages](https://pages.github.com) unter der eigenen Domain `https://wonderbrass-blechsound.de` (Datei `CNAME`, deshalb `baseurl: ""` in `_config.yml`).
 
-Workflow: Alle Änderungen laufen über den `develop`-Branch. Sobald `develop` nach `main` gemerged/gepusht wird, laufen automatisch zwei GitHub-Actions-Workflows:
+Das Repo liegt in Forgejo und wird per Push-Mirror nach GitHub gespiegelt. Alle Änderungen laufen über den `develop`-Branch. Sobald `develop` nach `main` gemergt wird, laufen automatisch zwei Workflows:
 
-- [`.github/workflows/pages.yml`](.github/workflows/pages.yml) baut die Seite und deployed sie auf GitHub Pages. GitHub Pages' eigener Safe-Mode-Build erlaubt keine zusätzlichen Gems wie `bootstrap`/`font-awesome-sass` oder eigene `_plugins` – deshalb baut der Workflow die Seite selbst per `bundle exec jekyll build`. Er läuft zusätzlich täglich per `schedule`, damit neue/geänderte Konzertmeister-Termine auch ohne Code-Änderung erscheinen.
-- [`.github/workflows/release.yml`](.github/workflows/release.yml) erstellt automatisch ein neues [Release](https://github.com/wonderbrass/wonderbrass-blechsound.de/releases) nach dem Schema `YYYY.MM.VERSION` (z.&nbsp;B. `2026.08.1`).
+- [`.github/workflows/pages.yml`](.github/workflows/pages.yml) (GitHub Actions) baut die Seite und deployed sie auf GitHub Pages. GitHub Pages' eigener Safe-Mode-Build erlaubt keine zusätzlichen Gems wie `bootstrap`/`font-awesome-sass` oder eigene `_plugins` – deshalb baut der Workflow die Seite selbst per `bundle exec jekyll build`. Er läuft zusätzlich täglich per `schedule`, damit neue/geänderte Konzertmeister-Termine auch ohne Code-Änderung erscheinen.
+- [`.forgejo/workflows/release.yml`](.forgejo/workflows/release.yml) (Forgejo Actions) erstellt Tag und Forgejo-Release nach dem Schema `YYYY.MM.N` (z.&nbsp;B. `2026.08.1`). Der Tag wird per Push-Mirror nach GitHub gespiegelt.
 
 **Einmalig im Repository einrichten:** Settings → Pages → *Build and deployment* → Source auf **„GitHub Actions"** stellen.

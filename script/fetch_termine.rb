@@ -112,32 +112,42 @@ def public_termine(appointments)
   appointments.select { |a| a["publicsite"] }.map { |a| to_termin(a) }
 end
 
-api_key = ENV["KONZERTMEISTER_API_KEY"]
-
-if api_key.nil? || api_key.empty?
-  warn "KONZERTMEISTER_API_KEY ist nicht gesetzt – _data/termine*.yml bleiben unverändert."
-  exit 0
+# Filter für die vergangenen Termine: vom 1. Januar des laufenden Jahres (Ortszeit
+# Europe/Berlin) bis jetzt.
+#
+# @param now_utc [Time] aktuelle Zeit in UTC
+# @return [Hash] BASE_FILTERS mit Zeitraum für die API
+def vergangene_filter(now_utc)
+  current_year = local_time(now_utc.iso8601, DEFAULT_TIMEZONE).year
+  BASE_FILTERS.merge(
+    dateMode: "FROM_DATE",
+    filterStart: format("%04d-01-01T00:00:00+00:00", current_year),
+    filterEnd: now_utc.strftime("%Y-%m-%dT%H:%M:%S+00:00"),
+  )
 end
 
-now_utc = Time.now.utc
-current_year = local_time(now_utc.iso8601, DEFAULT_TIMEZONE).year
+# Läuft nur beim direkten Aufruf. Die Tests (test/fetch_termine_test.rb) laden die
+# Datei, um die Funktionen oben einzeln zu prüfen.
+if File.expand_path($PROGRAM_NAME) == File.expand_path(__FILE__)
+  api_key = ENV["KONZERTMEISTER_API_KEY"]
 
-upcoming_filters = BASE_FILTERS.merge(dateMode: "UPCOMING")
-past_filters = BASE_FILTERS.merge(
-  dateMode: "FROM_DATE",
-  filterStart: format("%04d-01-01T00:00:00+00:00", current_year),
-  filterEnd: now_utc.strftime("%Y-%m-%dT%H:%M:%S+00:00"),
-)
+  if api_key.nil? || api_key.empty?
+    warn "KONZERTMEISTER_API_KEY ist nicht gesetzt – _data/termine*.yml bleiben unverändert."
+    exit 0
+  end
 
-upcoming_termine = public_termine(fetch_all_appointments(api_key, upcoming_filters))
-  .sort_by { |t| t["start"] }
+  upcoming_filters = BASE_FILTERS.merge(dateMode: "UPCOMING")
 
-# Nur das laufende Kalenderjahr, neueste zuerst.
-vergangene_termine = public_termine(fetch_all_appointments(api_key, past_filters))
-  .sort_by { |t| t["start"] }
-  .reverse
+  upcoming_termine = public_termine(fetch_all_appointments(api_key, upcoming_filters))
+    .sort_by { |t| t["start"] }
 
-File.write(OUTPUT_PATH, upcoming_termine.to_yaml)
-File.write(PAST_OUTPUT_PATH, vergangene_termine.to_yaml)
-puts "#{upcoming_termine.length} kommende(r) und #{vergangene_termine.length} " \
-     "vergangene(r) Termin(e) von der Konzertmeister-API geschrieben."
+  # Nur das laufende Kalenderjahr, neueste zuerst.
+  vergangene_termine = public_termine(fetch_all_appointments(api_key, vergangene_filter(Time.now.utc)))
+    .sort_by { |t| t["start"] }
+    .reverse
+
+  File.write(OUTPUT_PATH, upcoming_termine.to_yaml)
+  File.write(PAST_OUTPUT_PATH, vergangene_termine.to_yaml)
+  puts "#{upcoming_termine.length} kommende(r) und #{vergangene_termine.length} " \
+       "vergangene(r) Termin(e) von der Konzertmeister-API geschrieben."
+end
