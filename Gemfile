@@ -20,6 +20,14 @@ gem "webrick", "~> 1.8"
 # DST-sicher) in script/fetch_termine.rb
 gem "tzinfo", "~> 2.0"
 
+# Testsuite (bundle exec rake, siehe README): minitest für die Tests, rake als
+# Aufruf, html-proofer prüft Links, Bilder und Skripte der gebauten Seite.
+group :test do
+  gem "html-proofer", "~> 5.0"
+  gem "minitest", "~> 5.25"
+  gem "rake", "~> 13.2"
+end
+
 group :jekyll_plugins do
   gem "jekyll-feed"
   gem "jekyll-sitemap"

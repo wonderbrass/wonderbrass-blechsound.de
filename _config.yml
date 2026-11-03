@@ -65,6 +65,9 @@ exclude:
   - node_modules
   - README.md
   - "*.gemspec"
+  # Testsuite (bundle exec rake), gehört nicht auf die Website
+  - Rakefile
+  - test
 
 defaults:
   - scope:
