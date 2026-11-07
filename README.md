@@ -88,6 +88,15 @@ Aufruf als Umgebungsvariable setzen, nicht dauerhaft exportieren:
 KONZERTMEISTER_API_KEY="dein-key" bundle exec ruby script/fetch_termine.rb
 ```
 
+Wer den Key dauerhaft lokal ablegen will: `.env.example` nach `.env.local`
+kopieren und den Key eintragen (gitignored, Secrets nie in `.env`). Geladen
+wird die Datei nur für den einen Aufruf, die Klammern halten die Variable aus
+der übrigen Shell heraus:
+
+```bash
+(set -a; . ./.env.local; bundle exec ruby script/fetch_termine.rb)
+```
+
 Ohne gesetzten Key bleiben die zuletzt im Repo vorhandenen
 `_data/termine*.yml` unverändert – lokales Entwickeln funktioniert also auch
 ohne Key.
