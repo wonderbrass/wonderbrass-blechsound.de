@@ -36,7 +36,7 @@ KONZERTMEISTER_API_KEY="dein-key" bundle exec ruby script/fetch_termine.rb
 
 Ohne Schlüssel endet das Skript mit Code 0 und lässt `_data/termine*.yml` unverändert (oder fehlend bei einem frischen Klon). Lokale Builds funktionieren trotzdem, `termine.html` zeigt dann „keine Termine“.
 
-`.env.example` dokumentiert die erwartete Variable (`KONZERTMEISTER_API_KEY=`). Kopieren nach `.env` und echten Schlüssel eintragen, beide Dateien stehen in der `.gitignore`. Nichts im Repo lädt `.env` automatisch (kein `dotenv`-Gem), die Variable vor dem Skript selbst exportieren.
+`.env.example` dokumentiert die erwartete Variable (`KONZERTMEISTER_API_KEY=`). Kopieren nach `.env.local` und echten Schlüssel eintragen, die Datei steht in der `.gitignore`. Secrets gehören nach der Regel im Handbuch nur in `.env.local`, nie in `.env`. Nichts im Repo lädt die Datei automatisch (kein `dotenv`-Gem), sie wird für den einen Aufruf in die Shell geladen: `(set -a; . ./.env.local; bundle exec ruby script/fetch_termine.rb)`.
 
 ## Architektur
 

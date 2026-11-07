@@ -9,7 +9,7 @@ require "test_helper"
 
 class SiteTest < Minitest::Test
   # Files of the repository that must never end up on the website
-  INTERNAL_FILES = %w[CLAUDE.md Gemfile Gemfile.lock README.md Rakefile script test .env .env.example .github .forgejo]
+  INTERNAL_FILES = %w[CLAUDE.md Gemfile Gemfile.lock README.md Rakefile script test .env .env.local .env.example .github .forgejo]
                    .freeze
 
   def past_appointments
